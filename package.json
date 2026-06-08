@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "node build.mjs",
-    "build": "node scripts/build.mjs --production"
+    "build": "node build.mjs --production"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
