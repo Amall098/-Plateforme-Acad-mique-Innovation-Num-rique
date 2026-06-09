@@ -1,7 +1,7 @@
 /**
  * @file Home.tsx
  * @description Page d'accueil de la Plateforme Académique d'Innovation Numérique
- * pour le Prof. Abakar Malloum. Contient le header, le héros, les sections
+ * pour le Dr. Abakar Malloum. Contient le header, le héros, les sections
  * Enseignement / Formations / Recherche et un footer, dans un design moderne et épuré.
  */
 
