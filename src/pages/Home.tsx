@@ -99,11 +99,7 @@ function HeroSection(): JSX.Element {
           </h1>
 
           <p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            Un espace dédié à l&apos;enseignement universitaire, aux formations
-            professionnelles et à la recherche appliquée en sciences des
-            données, intelligence artificielle et transformation numérique, sous
-            la direction du{' '}
-            <span className="font-semibold text-slate-900">Prof. Abakar Malloum</span>.
+            Un espace interdisciplinaire dédié à l'enseignement universitaire, aux formations professionnelles et à la recherche. Sous la direction du Prof. Abakar Malloum, cette plateforme explore les enjeux de l'intelligence artificielle et de la transformation numérique à travers le prisme critique de la philosophie politique, de la théorie morale et de l'éthique appliquée
           </p>
 
           <div className="flex flex-wrap gap-3">
