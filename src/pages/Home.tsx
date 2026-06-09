@@ -1,26 +1,16 @@
 /**
  * @file Home.tsx
  * @description Page d'accueil de la Plateforme Académique d'Innovation Numérique
- * pour le Dr. Abakar Malloum. Contient le header, le héros, les sections
- * Enseignement / Formations / Recherche et un footer, dans un design moderne et épuré.
+ * pour le Prof. Abakar Malloum.
  */
 
 import React, { useEffect } from 'react'
 
-/**
- * Représente un élément de navigation dans le header.
- */
 interface NavItem {
-  /** Libellé affiché dans la barre de navigation. */
   label: string
-  /** ID de la section cible dans la page. */
   targetId: string
 }
 
-/**
- * Fait défiler la page jusqu'à la section donnée en douceur.
- * @param id - Identifiant de la section (attribut HTML id).
- */
 function scrollToSection(id: string): void {
   const element = document.getElementById(id)
   if (element) {
@@ -28,10 +18,6 @@ function scrollToSection(id: string): void {
   }
 }
 
-/**
- * Composant Header
- * Affiche la barre de navigation supérieure, sticky, avec logo et liens d'ancrage.
- */
 function Header(): JSX.Element {
   const navItems: NavItem[] = [
     { label: 'Accueil', targetId: 'home' },
@@ -75,10 +61,6 @@ function Header(): JSX.Element {
   )
 }
 
-/**
- * Composant HeroSection
- * Présente le professeur, la plateforme et les principaux axes (enseignement, data, recherche).
- */
 function HeroSection(): JSX.Element {
   return (
     <section
@@ -99,7 +81,7 @@ function HeroSection(): JSX.Element {
           </h1>
 
           <p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            Un espace interdisciplinaire dédié à l'enseignement universitaire, aux formations professionnelles et à la recherche. Sous la direction du Prof. Abakar Malloum, cette plateforme explore les enjeux de l'intelligence artificielle et de la transformation numérique à travers le prisme critique de la philosophie politique, de la théorie morale et de l'éthique appliquée
+            Un carrefour entre technologie et sciences humaines dédié à l'enseignement et à la recherche. J'y analyse l'impact de l'intelligence artificielle, des données et de la mondialisation technologique sous l'angle de la philosophie politique, de l'éthique appliquée et des nouveaux enjeux de la citoyenneté numérique.
           </p>
 
           <div className="flex flex-wrap gap-3">
@@ -196,18 +178,10 @@ function HeroSection(): JSX.Element {
   )
 }
 
-/**
- * Composant SectionShell
- * Conteneur générique pour les sections avec titre et description.
- */
 interface SectionShellProps {
-  /** Identifiant de section, utilisé pour l&apos;ancre de navigation. */
   id: string
-  /** Titre principal de la section. */
   title: string
-  /** Description courte sous le titre. */
   description: string
-  /** Contenu spécifique de la section. */
   children: React.ReactNode
 }
 
@@ -231,10 +205,6 @@ function SectionShell(props: SectionShellProps): JSX.Element {
   )
 }
 
-/**
- * Composant TeachingSection
- * Présente l&apos;offre d&apos;enseignement universitaire.
- */
 function TeachingSection(): JSX.Element {
   return (
     <SectionShell
@@ -278,10 +248,6 @@ function TeachingSection(): JSX.Element {
   )
 }
 
-/**
- * Composant WorkshopsSection
- * Décrit les ateliers, formations professionnelles et activités autour de la donnée.
- */
 function WorkshopsSection(): JSX.Element {
   return (
     <SectionShell
@@ -324,10 +290,6 @@ function WorkshopsSection(): JSX.Element {
   )
 }
 
-/**
- * Composant ResearchSection
- * Met en avant les axes de recherche et les projets technologiques.
- */
 function ResearchSection(): JSX.Element {
   return (
     <SectionShell
@@ -361,10 +323,88 @@ function ResearchSection(): JSX.Element {
   )
 }
 
-/**
- * Composant Footer
- * Pied de page institutionnel avec informations de base et contact.
- */
+/* NOUVELLE SECTION : PORTFOLIO DE COURS */
+function CoursePortfolio(): JSX.Element {
+  return (
+    <section style={{ padding: '60px 20px', backgroundColor: '#ffffff', fontFamily: 'system-ui, sans-serif' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        
+        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <h2 style={{ color: '#1e3a8a', fontSize: '2.2rem', marginBottom: '15px' }}>
+            Portfolios de Cours &amp; Transparence Pédagogique
+          </h2>
+          <p style={{ color: '#4b5563', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
+            Une gouvernance de cours claire et accessible est le fondement d&apos;un apprentissage réussi. 
+            Ces portfolios présentent l&apos;architecture de mes enseignements, les objectifs rigoureux de la pensée politique 
+            et la structure d&apos;évaluation multipartite qui garantit l&apos;équité académique.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '50px' }}>
+          
+          <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+            <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '9999px', fontSize: '0.85rem', fontWeight: 'bold' }}>
+              POL 2508
+            </span>
+            <h3 style={{ color: '#111827', fontSize: '1.5rem', marginTop: '15px', marginBottom: '10px' }}>
+              Pensée politique moderne I
+            </h3>
+            <p style={{ color: '#4b5563', fontSize: '0.95rem', lineHeight: '1.6' }}>
+              Ce cours explore les fondements conceptuels de la modernité politique à travers l&apos;analyse critique des textes majeurs. 
+              L&apos;accent est mis sur l&apos;émergence de l&apos;État, les théories du contrat social, de la souveraineté et des droits individuels, 
+              permettant de contextualiser les débats contemporains sur la citoyenneté.
+            </p>
+          </div>
+
+          <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+            <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '9999px', fontSize: '0.85rem', fontWeight: 'bold' }}>
+              POL 2108
+            </span>
+            <h3 style={{ color: '#111827', fontSize: '1.5rem', marginTop: '15px', marginBottom: '10px' }}>
+              Modern Political Thought I
+            </h3>
+            <p style={{ color: '#4b5563', fontSize: '0.95rem', lineHeight: '1.6' }}>
+              Conducted in English, this course examines the canonical texts that shaped the modern political landscape. 
+              Students engage with complex theoretical frameworks to develop critical analytical skills, mapping the evolution 
+              of power, liberty, and institutional legitimacy from the Renaissance to the Enlightenment.
+            </p>
+          </div>
+
+        </div>
+
+        <div style={{ backgroundColor: '#f9fafb', borderRadius: '12px', padding: '40px', border: '1px solid #e5e7eb' }}>
+          <h3 style={{ color: '#1e3a8a', fontSize: '1.6rem', marginBottom: '20px' }}>
+            Architecture Évaluative et Équité
+          </h3>
+          
+          <p style={{ color: '#374151', fontSize: '1rem', lineHeight: '1.6', marginBottom: '20px' }}>
+            Pour garantir une évaluation juste et stimulante de la pensée critique, les cours POL 2108 et POL 2508 reposent sur une approche d&apos;évaluation continue, structurée autour de jalons clairs et transparents :
+          </p>
+
+          <ul style={{ paddingLeft: '20px', color: '#374151', lineHeight: '1.8', fontSize: '1rem', marginBottom: '30px' }}>
+            <li>
+              <strong>Évaluations Formatives et Sommatives :</strong> L&apos;articulation entre les présentations orales, les quiz de lecture réguliers et les examens de synthèse est pensée pour valider progressivement l&apos;assimilation des concepts philosophiques complexes, évitant la surcharge cognitive de fin de semestre.
+            </li>
+            <li>
+              <strong>Critères de Correction Explicites :</strong> Chaque travail fait l&apos;objet d&apos;une grille d&apos;évaluation détaillée, distribuée en amont, spécifiant les attentes en matière d&apos;analyse textuelle, de rigueur argumentative et de clarté conceptuelle.
+            </li>
+          </ul>
+
+          <div style={{ borderLeft: '4px solid #2563eb', paddingLeft: '20px', marginTop: '20px' }}>
+            <h4 style={{ color: '#111827', fontSize: '1.15rem', marginBottom: '10px', fontWeight: 'bold' }}>
+              Gouvernance Collégiale du Cours
+            </h4>
+            <p style={{ color: '#4b5563', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+              Le processus de notation est une démarche rigoureuse et collégiale. Toutes les évaluations, examens et travaux écrits sont gérés et révisés en coordination directe avec une équipe d&apos;assistants d&apos;enseignement (TAs) et de correcteurs universitaires qualifiés. Cette structure multipartite assure une objectivité absolue, une standardisation stricte des notes et une double vérification systématique, garantissant le respect rigoureux des standards de l&apos;institution.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
 function Footer(): JSX.Element {
   return (
     <footer
@@ -400,10 +440,6 @@ function Footer(): JSX.Element {
   )
 }
 
-/**
- * Composant HomePage
- * Page principale de la plateforme, assemble toutes les sections avec un design cohérent.
- */
 export default function HomePage(): JSX.Element {
   useEffect(() => {
     document.title =
@@ -418,96 +454,9 @@ export default function HomePage(): JSX.Element {
         <TeachingSection />
         <WorkshopsSection />
         <ResearchSection />
-    export default function CoursePortfolio() {
-  return (
-    <section style={{ padding: '60px 20px', backgroundColor: '#ffffff', fontFamily: 'system-ui, sans-serif' }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-        
-        {/* En-tête de la section */}
-        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <h2 style={{ color: '#1e3a8a', fontSize: '2.2rem', marginBottom: '15px' }}>
-            Portfolios de Cours & Transparence Pédagogique
-          </h2>
-          <p style={{ color: '#4b5563', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
-            Une gouvernance de cours claire et accessible est le fondement d'un apprentissage réussi. 
-            Ces portfolios présentent l'architecture de mes enseignements, les objectifs rigoureux de la pensée politique 
-            et la structure d'évaluation multipartite qui garantit l'équité académique.
-          </p>
-        </div>
-
-        {/* Grille des cours POL 2108 / 2508 */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '50px' }}>
-          
-          {/* Carte POL 2508 */}
-          <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-            <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '9999px', fontSize: '0.85rem', fontWeight: 'bold' }}>
-              POL 2508
-            </span>
-            <h3 style={{ color: '#111827', fontSize: '1.5rem', marginTop: '15px', marginBottom: '10px' }}>
-              Pensée politique moderne I
-            </h3>
-            <p style={{ color: '#4b5563', fontSize: '0.95rem', lineHeight: '1.6' }}>
-              Ce cours explore les fondements conceptuels de la modernité politique à travers l'analyse critique des textes majeurs. 
-              L'accent est mis sur l'émergence de l'État, les théories du contrat social, de la souveraineté et des droits individuels, 
-              permettant de contextualiser les débats contemporains sur la citoyenneté.
-            </p>
-          </div>
-
-          {/* Carte POL 2108 */}
-          <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-            <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '9999px', fontSize: '0.85rem', fontWeight: 'bold' }}>
-              POL 2108
-            </span>
-            <h3 style={{ color: '#111827', fontSize: '1.5rem', marginTop: '15px', marginBottom: '10px' }}>
-              Modern Political Thought I
-            </h3>
-            <p style={{ color: '#4b5563', fontSize: '0.95rem', lineHeight: '1.6' }}>
-              Conducted in English, this course examines the canonical texts that shaped the modern political landscape. 
-              Students engage with complex theoretical frameworks to develop critical analytical skills, mapping the evolution 
-              of power, liberty, and institutional legitimacy from the Renaissance to the Enlightenment.
-            </p>
-          </div>
-
-        </div>
-
-        {/* Section Alignement Pédagogique et Évaluation */}
-        <div style={{ backgroundColor: '#f9fafb', borderRadius: '12px', padding: '40px', border: '1px solid #e5e7eb' }}>
-          <h3 style={{ color: '#1e3a8a', fontSize: '1.6rem', marginBottom: '20px' }}>
-            Architecture Évaluative et Équité
-          </h3>
-          
-          <p style={{ color: '#374151', fontSize: '1rem', lineHeight: '1.6', marginBottom: '20px' }}>
-            Pour garantir une évaluation juste et stimulante de la pensée critique, les cours POL 2108 et POL 2508 reposent sur une approche d'évaluation continue, structurée autour de jalons clairs et transparents :
-          </p>
-
-          <ul style={{ paddingLeft: '20px', color: '#374151', lineHeight: '1.8', fontSize: '1rem', marginBottom: '30px' }}>
-            <li>
-              <strong>Évaluations Formatives et Sommatives :</strong> L'articulation entre les présentations orales, les quiz de lecture réguliers et les examens de synthèse est pensée pour valider progressivement l'assimilation des concepts philosophiques complexes, évitant la surcharge cognitive de fin de semestre.
-            </li>
-            <li>
-              <strong>Critères de Correction Explicites :</strong> Chaque travail fait l'objet d'une grille d'évaluation (rubric) détaillée, distribuée en amont, spécifiant les attentes en matière d'analyse textuelle, de rigueur argumentative et de clarté conceptuelle.
-            </li>
-          </ul>
-
-          {/* Intégrité de la notation (Élément clé de défense institutionnelle) */}
-          <div style={{ borderLeft: '4px solid #2563eb', paddingLeft: '20px', marginTop: '20px' }}>
-            <h4 style={{ color: '#111827', fontSize: '1.15rem', marginBottom: '10px', fontWeight: 'bold' }}>
-              Gouvernance Collégiale du Cours
-            </h4>
-            <p style={{ color: '#4b5563', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
-              Le processus de notation est une démarche rigoureuse et collégiale. Toutes les évaluations, examens et travaux écrits sont gérés et révisés en coordination directe avec une équipe d'assistants d'enseignement (TAs) et de correcteurs universitaires qualifiés. Cette structure multipartite assure une objectivité absolue, une standardisation stricte des notes et une double vérification systématique, garantissant le respect rigoureux des standards de l'institution.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  )
-}  
-      
+        <CoursePortfolio />
       </main>
       <Footer />
     </div>
   )
 }
-
