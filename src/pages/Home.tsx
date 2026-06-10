@@ -1,7 +1,7 @@
 /**
  * @file Home.tsx
  * @description Page d'accueil bilingue de la Plateforme Académique d'Innovation Numérique
- * pour le Prof. Abakar Malloum.
+ * pour Dr. Abakar Malloum.
  */
 
 import React, { useState, useEffect } from 'react'
@@ -202,7 +202,7 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
               {t.badge}
             </span>
             <span className="text-sm font-semibold text-slate-900 sm:text-base">
-              Prof. Abakar Malloum
+              Dr. Abakar Malloum
             </span>
           </div>
         </div>
@@ -260,7 +260,7 @@ function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                      Prof. Abakar Malloum
+                      Dr. Malloum
                     </div>
                     <div className="text-sm font-semibold text-slate-900">
                       {t.profTag}
@@ -468,7 +468,7 @@ function Footer({ lang }: { lang: 'fr'|'en' }): JSX.Element {
             {dict[lang].hero.title}
           </div>
           <div className="mt-1 text-sm font-semibold text-white sm:text-base">
-            Prof. Abakar Malloum
+            Abakar Malloum
           </div>
           <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-300 sm:text-sm">
             {t.desc}
