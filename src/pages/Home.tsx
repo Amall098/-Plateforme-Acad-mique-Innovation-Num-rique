@@ -221,7 +221,9 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
           ))}
         </nav>
 
-        {/* BOUTON DE LANGUE (Mots complets) */}
+        {/* 3. BOUTONS TOUJOURS VISIBLES (Langue + Hamburger Mobile) */}
+        <div className="flex items-center gap-3">
+          {/* BOUTON DE LANGUE (Mots complets) */}
           <button 
             onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
             className="flex items-center justify-center rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold text-slate-800 transition hover:bg-slate-200"
