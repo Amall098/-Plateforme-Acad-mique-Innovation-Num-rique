@@ -182,6 +182,9 @@ function scrollToSection(id: string): void {
 
 function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') => void }): JSX.Element {
   const t = dict[lang].nav
+  // Nouvel état pour gérer l'ouverture du menu sur téléphone
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const navItems = [
     { label: t.home, targetId: 'home' },
     { label: t.portfolio, targetId: 'teaching-portfolio' },
@@ -193,6 +196,8 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
   return (
     <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        
+        {/* 1. LOGO ET NOM */}
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white shadow-sm">
             AM
@@ -202,25 +207,63 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
               {t.badge}
             </span>
             <span className="text-sm font-semibold text-slate-900 sm:text-base">
-              Dr. Abakar Malloum
+              Prof. Abakar Malloum
             </span>
           </div>
         </div>
 
+        {/* 2. NAVIGATION ORDINATEUR (Cachée sur mobile) */}
         <nav className="hidden items-center gap-5 text-sm font-medium text-slate-600 sm:flex">
           {navItems.map((item) => (
             <button key={item.targetId} type="button" onClick={() => scrollToSection(item.targetId)} className="transition-colors hover:text-slate-900">
               {item.label}
             </button>
           ))}
+        </nav>
+
+        {/* BOUTON DE LANGUE (Mots complets) */}
           <button 
             onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
-            className="ml-4 flex items-center justify-center rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-800 transition hover:bg-slate-200"
+            className="flex items-center justify-center rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold text-slate-800 transition hover:bg-slate-200"
           >
-            {t.langToggle}
+            {lang === 'fr' ? 'Anglais' : 'Français'}
           </button>
-        </nav>
+          
+          {/* Le bouton Hamburger (Visible uniquement sur mobile : sm:hidden) */}
+          <button 
+            className="flex items-center justify-center p-2 text-slate-600 hover:text-slate-900 sm:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {/* Si le menu est ouvert on affiche une croix (X), sinon les 3 lignes (Hamburger) */}
+            {isMobileMenuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* 4. LE MENU DÉROULANT MOBILE */}
+      {isMobileMenuOpen && (
+        <div className="absolute left-0 top-full w-full border-b border-slate-100 bg-white px-4 py-4 shadow-lg sm:hidden">
+          <nav className="flex flex-col space-y-4 text-sm font-medium text-slate-600">
+            {navItems.map((item) => (
+              <button 
+                key={item.targetId} 
+                type="button" 
+                onClick={() => {
+                  scrollToSection(item.targetId);
+                  setIsMobileMenuOpen(false); // Ferme le menu après le clic
+                }} 
+                className="text-left transition-colors hover:text-slate-900"
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   )
 }
