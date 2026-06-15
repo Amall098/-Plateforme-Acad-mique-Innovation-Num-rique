@@ -18,6 +18,9 @@ const dict = {
       sim: "Simulateur",
       workshops: "Formations",
       research: "Recherche",
+      publications: "Publications",
+      conferences: "Conférences",
+      activities: "Activités",
       contact: "Contact",
       langToggle: "EN",
     },
@@ -87,6 +90,31 @@ const dict = {
       rights: "Tous droits réservés."
     }
   },
+  pubs: {
+      title: "Publications & Travaux Scientifiques",
+      desc: "Articles de recherche, contributions à des ouvrages collectifs et rapports d'analyse en philosophie politique et éthique du numérique.",
+      items: [
+        { type: "Article", title: "La citoyenneté numérique à l'ère des algorithmes : fondements philosophiques et enjeux de gouvernance", journal: "Revue Canadienne de Science Politique (Exemple)", year: "2025" },
+        { type: "Chapitre", title: "De Hobbes à l'IA publique : la reconfiguration temporelle des artefacts étatiques", journal: "Éditions Universitaires", year: "2026" }
+      ]
+    },
+    conf: {
+      title: "Conférences & Communications",
+      desc: "Interventions et présentations lors de colloques nationaux et internationaux.",
+      items: [
+        { event: "Congrès annuel de l'Association de science politique", location: "Ottawa, ON", title: "Éthique algorithmique et responsabilité collective", year: "2025" },
+        { event: "Séminaire international sur la mondialisation technologique", location: "Montréal, QC", title: "L'aliénation numérique et les structures de l'État moderne", year: "2026" }
+      ]
+    },
+    act: {
+      title: "Autres Activités Académiques",
+      desc: "Expertises institutionnelles, comités scientifiques, collaborations de recherche et contributions à la vie universitaire.",
+      items: [
+        "Évaluation par les pairs pour des revues académiques spécialisées en éthique appliquée.",
+        "Collaboration stratégique et rapports d'analyse sectoriels pour des organismes canadiens.",
+        "Encadrement collégial et jurys d'évaluation aux cycles supérieurs."
+      ]
+    },
   en: {
     nav: {
       badge: "Academic Platform",
@@ -96,6 +124,9 @@ const dict = {
       workshops: "Workshops",
       research: "Research",
       contact: "Contact",
+      publications: "Publications",
+conferences: "Conferences",
+activities: "Activities",
       langToggle: "FR",
     },
     hero: {
@@ -189,6 +220,9 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
     { label: t.home, targetId: 'home' },
     { label: t.portfolio, targetId: 'teaching-portfolio' },
     { label: t.sim, targetId: 'simulator-lab' },
+    { label: t.publications, targetId: 'publications' },
+    { label: t.conferences, targetId: 'conferences' },
+    { label: t.activities, targetId: 'academic-activities' },
     { label: t.workshops, targetId: 'workshops' },
     { label: t.research, targetId: 'research' },
   ]
@@ -213,7 +247,7 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
         </div>
 
         {/* 2. NAVIGATION ORDINATEUR (Cachée sur mobile) */}
-        <nav className="hidden items-center gap-5 text-sm font-medium text-slate-600 sm:flex">
+        <nav className="hidden items-center gap-3 lg:gap-4 text-xs lg:text-sm font-medium text-slate-600 sm:flex">
           {navItems.map((item) => (
             <button key={item.targetId} type="button" onClick={() => scrollToSection(item.targetId)} className="transition-colors hover:text-slate-900">
               {item.label}
@@ -460,7 +494,58 @@ function SimulationLab({ lang }: { lang: 'fr'|'en' }): JSX.Element {
     </SectionShell>
   )
 }
+function PublicationsSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
+  const t = dict[lang].pubs
+  return (
+    <SectionShell id="publications" title={t.title} description={t.desc}>
+      <div className="space-y-4">
+        {t.items.map((item, idx) => (
+          <div key={idx} className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition hover:shadow-md">
+            <span className="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-600">{item.type}</span>
+            <h4 className="mt-2 text-base font-semibold text-slate-900">{item.title}</h4>
+            <p className="mt-1 text-xs text-slate-500">{item.journal} — {item.year}</p>
+          </div>
+        ))}
+      </div>
+    </SectionShell>
+  )
+}
 
+function ConferencesSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
+  const t = dict[lang].conf
+  return (
+    <SectionShell id="conferences" title={t.title} description={t.desc}>
+      <div className="grid gap-5 sm:grid-cols-2">
+        {t.items.map((item, idx) => (
+          <div key={idx} className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm">
+            <span className="text-xs font-mono text-slate-400">{item.year}</span>
+            <h4 className="mt-1 text-base font-semibold text-slate-900">{item.title}</h4>
+            <p className="mt-2 text-xs font-medium text-slate-600">{item.event}</p>
+            <p className="text-xs text-slate-400">{item.location}</p>
+          </div>
+        ))}
+      </div>
+    </SectionShell>
+  )
+}
+
+function ActivitiesSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
+  const t = dict[lang].act
+  return (
+    <SectionShell id="academic-activities" title={t.title} description={t.desc}>
+      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+        <ul className="space-y-3">
+          {t.items.map((item, idx) => (
+            <li key={idx} className="flex items-start gap-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </SectionShell>
+  )
+}
 function WorkshopsSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
   const t = dict[lang].workshops
   return (
@@ -545,13 +630,19 @@ export default function HomePage(): JSX.Element {
       : "Prof. Abakar Malloum — Academic Platform for Digital Innovation"
   }, [lang])
 
-  return (
+return (
     <div className="min-h-screen bg-white text-slate-900 antialiased">
       <Header lang={lang} setLang={setLang} />
       <main>
         <HeroSection lang={lang} />
         <TotalCoursePortfolio lang={lang} />
         <SimulationLab lang={lang} />
+        
+        {/* NOUVELLES SECTIONS ADAPTATIVES */}
+        <PublicationsSection lang={lang} />
+        <ConferencesSection lang={lang} />
+        <ActivitiesSection lang={lang} />
+        
         <WorkshopsSection lang={lang} />
         <ResearchSection lang={lang} />
       </main>
