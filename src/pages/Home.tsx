@@ -16,11 +16,11 @@ const dict = {
       home: "Accueil",
       portfolio: "Portfolios de Cours",
       sim: "Simulateur",
-      workshops: "Formations",
-      research: "Recherche",
       publications: "Publications",
       conferences: "Conférences",
       activities: "Activités",
+      workshops: "Formations",
+      research: "Recherche",
       contact: "Contact",
       langToggle: "EN",
     },
@@ -69,28 +69,7 @@ const dict = {
         stab: "Stabilité des Institutions"
       }
     },
-    workshops: {
-      title: "Formations, ateliers & data pour la décision",
-      desc: "Une offre de formations courtes, d’ateliers pratiques et d’accompagnement en analyse de données pour les institutions, administrations et entreprises.",
-      c1Title: "Ateliers de sensibilisation", c1Desc: "Sessions introductives sur les enjeux du numérique et de la donnée pour les décideurs, les cadres et les équipes.",
-      c2Title: "Formations techniques", c2Desc: "Parcours pratiques pour monter en compétence sur les outils de data science, de visualisation et d'automatisation.",
-      c3Title: "Analyse de données appliquée", c3Desc: "Accompagnement à la mise en place de tableaux de bord, d'indicateurs clés et d'outils d'aide à la décision."
-    },
-    research: {
-      title: "Recherche & projets technologiques",
-      desc: "Une activité de recherche ancrée dans les réalités du terrain, avec des projets collaboratifs à l’interface entre université, institutions et société.",
-      c1Title: "Axes de recherche",
-      c1L1: "Utilisation des données pour les politiques publiques", c1L2: "Transformation numérique des systèmes éducatifs", c1L3: "Intelligence artificielle responsable et éthique",
-      c2Title: "Projets & collaborations",
-      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions."
-    },
-    footer: {
-      desc: "Pour toute demande relative à l'enseignement, aux formations ou aux projets de recherche, merci de prendre contact par les canaux habituels de votre institution.",
-      badge: "Plateforme en évolution continue",
-      rights: "Tous droits réservés."
-    }
-  },
-  pubs: {
+    pubs: {
       title: "Publications & Travaux Scientifiques",
       desc: "Articles de recherche, contributions à des ouvrages collectifs et rapports d'analyse en philosophie politique et éthique du numérique.",
       items: [
@@ -115,18 +94,39 @@ const dict = {
         "Encadrement collégial et jurys d'évaluation aux cycles supérieurs."
       ]
     },
+    workshops: {
+      title: "Formations, ateliers & data pour la décision",
+      desc: "Une offre de formations courtes, d’ateliers pratiques et d’accompagnement en analyse de données pour les institutions, administrations et entreprises.",
+      c1Title: "Ateliers de sensibilisation", c1Desc: "Sessions introductives sur les enjeux du numérique et de la donnée pour les décideurs, les cadres et les équipes.",
+      c2Title: "Formations techniques", c2Desc: "Parcours pratiques pour monter en compétence sur les outils de data science, de visualisation et d'automatisation.",
+      c3Title: "Analyse de données appliquée", c3Desc: "Accompagnement à la mise en place de tableaux de bord, d'indicateurs clés et d'outils d'aide à la décision."
+    },
+    research: {
+      title: "Recherche & projets technologiques",
+      desc: "Une activité de recherche ancrée dans les réalités du terrain, avec des projets collaboratifs à l’interface entre université, institutions et société.",
+      c1Title: "Axes de recherche",
+      c1L1: "Utilisation des données pour les politiques publiques", c1L2: "Transformation numérique des systèmes éducatifs", c1L3: "Intelligence artificielle responsable et éthique",
+      c2Title: "Projets & collaborations",
+      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions."
+    },
+    footer: {
+      desc: "Pour toute demande relative à l'enseignement, aux formations ou aux projets de recherche, merci de prendre contact par les canaux habituels de votre institution.",
+      badge: "Plateforme en évolution continue",
+      rights: "Tous droits réservés."
+    }
+  },
   en: {
     nav: {
       badge: "Academic Platform",
       home: "Home",
       portfolio: "Course Portfolios",
       sim: "Simulator",
+      publications: "Publications",
+      conferences: "Conferences",
+      activities: "Activities",
       workshops: "Workshops",
       research: "Research",
       contact: "Contact",
-      publications: "Publications",
-conferences: "Conferences",
-activities: "Activities",
       langToggle: "FR",
     },
     hero: {
@@ -173,6 +173,31 @@ activities: "Activities",
         eq: "Social Equity & Justice",
         stab: "Institutional Stability"
       }
+    },
+    pubs: {
+      title: "Publications & Scientific Work",
+      desc: "Research articles, contributions to collective works, and analytical reports in political philosophy and digital ethics.",
+      items: [
+        { type: "Article", title: "Digital Citizenship in the Age of Algorithms: Philosophical Foundations and Governance Challenges", journal: "Canadian Journal of Political Science (Example)", year: "2025" },
+        { type: "Chapter", title: "From Hobbes to Public AI: The Temporal Reconfiguration of State Artifacts", journal: "University Press", year: "2026" }
+      ]
+    },
+    conf: {
+      title: "Conferences & Communications",
+      desc: "Interventions and presentations at national and international symposiums.",
+      items: [
+        { event: "Annual Congress of the Political Science Association", location: "Ottawa, ON", title: "Algorithmic Ethics and Collective Responsibility", year: "2025" },
+        { event: "International Seminar on Technological Globalization", location: "Montreal, QC", title: "Digital Alienation and the Structures of the Modern State", year: "2026" }
+      ]
+    },
+    act: {
+      title: "Other Academic Activities",
+      desc: "Institutional expertise, scientific committees, research collaborations, and contributions to university life.",
+      items: [
+        "Peer review for specialized academic journals in applied ethics.",
+        "Strategic collaboration and sector analysis reports for Canadian organizations.",
+        "Collegial supervision and evaluation juries at the graduate level."
+      ]
     },
     workshops: {
       title: "Training, Workshops & Data for Decision Making",
