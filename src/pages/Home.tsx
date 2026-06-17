@@ -201,7 +201,7 @@ const dict = {
     },
     workshops: {
       title: "Training, Workshops & Data for Decision Making",
-      desc: "Short training courses, practical workshops, and support in data analysis for institutions, administrations, and businesses.",
+      desc: "Towards digital governance guided by social conscience. In a world marked by complex political divisions and rapid technological transformation, innovation can no longer bypass ethics. In the face of artificial intelligence deployment and the mutations of digital citizenship, our teaching and research modules aim at an essential objective: equipping future decision-makers with a rigorous social conscience. We train leaders capable of guiding technologies that amplify inclusion and trust, thereby ensuring that the evolution of our institutions remains deeply rooted in compassion, equity, and the service of the common good.",
       c1Title: "Awareness Workshops", c1Desc: "Introductory sessions on digital and data challenges for decision-makers, executives, and operational teams.",
       c2Title: "Technical Training", c2Desc: "Practical paths to gain skills in data science tools, visualization, and automation.",
       c3Title: "Applied Data Analysis", c3Desc: "Support in setting up dashboards, key indicators, and data-driven decision support tools."
