@@ -287,7 +287,7 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
             onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
             className="flex items-center justify-center rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold text-slate-800 transition hover:bg-slate-200"
           >
-            {lang === 'fr' ? 'Anglais' : 'Français'}
+            {lang === 'fr' ? 'English' : 'Français'}
           </button>
           
           {/* Le bouton Hamburger (Visible uniquement sur mobile : sm:hidden) */}
