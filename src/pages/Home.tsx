@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import heroVideo from '/video-classroom.mp4' /
+<source src="/video-classroom.mp4" type="video/mp4" />
 
 // ==========================================
 // 1. LE DICTIONNAIRE BILINGUE
