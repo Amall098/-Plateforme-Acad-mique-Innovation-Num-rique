@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react'
+import heroVideo from '/video-classroom.mp4' /
 
 // ==========================================
 // 1. LE DICTIONNAIRE BILINGUE
@@ -341,7 +342,7 @@ function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
-        <source src="/video-classroom.mp4" type="video/mp4" />
+        <source src={heroVideo} type="video/mp4" />
         Votre navigateur ne supporte pas la balise vidéo.
       </video>
 
