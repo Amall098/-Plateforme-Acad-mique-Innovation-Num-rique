@@ -332,51 +332,44 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
 function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
   const t = dict[lang].hero
   return (
-    <section id="home" className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
-      <div className="absolute inset-x-0 -top-32 -z-10 h-64 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.08),_transparent_60%)]" />
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:flex-row lg:items-center lg:gap-16 lg:py-20">
-        <div className="flex-1 space-y-6">
-          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-500 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            {t.tag}
-          </span>
-          <h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-            {t.title}
-          </h1>
-          <p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            {t.desc}
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <button type="button" onClick={() => scrollToSection('simulator-lab')} className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">
-              {t.btnSim}
-            </button>
-            <button type="button" onClick={() => scrollToSection('teaching-portfolio')} className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-400 hover:bg-slate-50">
-              {t.btnCourse}
-            </button>
-          </div>
-        </div>
-        <div className="flex-1">
-          <div className="relative mx-auto max-w-md">
-            <div className="absolute -inset-6 -z-10 rounded-3xl bg-gradient-to-tr from-slate-900/10 via-emerald-500/5 to-sky-500/10 blur-2xl" />
-            <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xl">
-              <img src="https://pub-cdn.sider.ai/u/U08XHONVVR/web-coder/6a247852614ae89139df7deb/resource/e47a96c9-49af-4fa6-aa4a-c81ba0cf1936.png" alt="Innovation numérique universitaire" className="h-56 w-full object-cover sm:h-64" />
-              <div className="space-y-3 px-5 py-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                      Dr. Malloum
-                    </div>
-                    <div className="text-sm font-semibold text-slate-900">
-                      {t.profTag}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-xs leading-relaxed text-slate-600">
-                  {t.profDesc}
-                </p>
-              </div>
-            </div>
-          </div>
+    <section id="home" className="relative h-screen w-full overflow-hidden">
+      {/* Vidéo en arrière-plan importée depuis le dossier public */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover"
+      >
+        <source src="/video-classroom.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas la balise vidéo.
+      </video>
+
+      {/* Voile sombre pour garantir la lisibilité du texte (Overlay) */}
+      <div className="absolute top-0 left-0 w-full h-full bg-slate-900/60 z-0"></div>
+
+      {/* Contenu textuel bilingue superposé */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 max-w-4xl mx-auto">
+        <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200 backdrop-blur-md shadow-sm">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          {t.tag}
+        </span>
+        
+        <h1 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl mb-6">
+          {t.title}
+        </h1>
+        
+        <p className="max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg mb-10">
+          {t.desc}
+        </p>
+        
+        <div className="flex flex-wrap justify-center gap-4">
+          <button type="button" onClick={() => scrollToSection('simulator-lab')} className="inline-flex items-center justify-center rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-emerald-400">
+            {t.btnSim}
+          </button>
+          <button type="button" onClick={() => scrollToSection('teaching-portfolio')} className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-white/20">
+            {t.btnCourse}
+          </button>
         </div>
       </div>
     </section>
