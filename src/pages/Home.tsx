@@ -333,8 +333,8 @@ function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
   const t = dict[lang].hero
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden">
-      {/* Vidéo en arrière-plan importée depuis le dossier public */}
-     <video
+      {/* Vidéo de fond */}
+      <video
         autoPlay
         loop
         muted
@@ -342,40 +342,50 @@ function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
         <source src="/video-classroom.mp4" type="video/mp4" />
-        Votre navigateur ne supporte pas la balise vidéo.
       </video>
 
-      {/* Voile sombre pour garantir la lisibilité du texte (Overlay) */}
-      <div className="absolute top-0 left-0 w-full h-full bg-slate-900/60 z-0"></div>
+      {/* Voile sombre */}
+      <div className="absolute top-0 left-0 w-full h-full bg-slate-900/70 z-0"></div>
 
-      {/* Contenu textuel bilingue superposé */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 max-w-4xl mx-auto">
-        <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200 backdrop-blur-md shadow-sm">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          {t.tag}
-        </span>
+      {/* Contenu principal en deux colonnes */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center h-full max-w-6xl mx-auto px-6 gap-8 lg:gap-16">
         
-        <h1 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl mb-6">
-          {t.title}
-        </h1>
-        
-        <p className="max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg mb-10">
-          {t.desc}
-        </p>
-        
-        <div className="flex flex-wrap justify-center gap-4">
-          <button type="button" onClick={() => scrollToSection('simulator-lab')} className="inline-flex items-center justify-center rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-emerald-400">
-            {t.btnSim}
-          </button>
-          <button type="button" onClick={() => scrollToSection('teaching-portfolio')} className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-white/20">
-            {t.btnCourse}
-          </button>
+        {/* Colonne de gauche : Texte */}
+        <div className="flex-1 text-center lg:text-left">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200 backdrop-blur-md shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            {t.tag}
+          </span>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">{t.title}</h1>
+          <p className="text-base md:text-lg text-slate-200 mb-8 leading-relaxed max-w-2xl">{t.desc}</p>
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+            <button onClick={() => scrollToSection('simulator-lab')} className="px-6 py-3 bg-emerald-500 text-slate-900 font-semibold rounded-full hover:bg-emerald-400 transition">
+              {t.btnSim}
+            </button>
+            <button onClick={() => scrollToSection('teaching-portfolio')} className="px-6 py-3 border border-slate-300 bg-white/10 backdrop-blur-md text-white font-semibold rounded-full hover:bg-white/20 transition">
+              {t.btnCourse}
+            </button>
+          </div>
+        </div>
+
+        {/* Colonne de droite : Votre Portrait (vidéo) */}
+        <div className="flex-shrink-0">
+          <div className="w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl backdrop-blur-sm">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="w-full h-full object-cover"
+            >
+              <source src="/mon-portrait-pro.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </section>
   )
 }
-
 function SectionShell({ id, title, description, children }: { id: string, title: string, description: string, children: React.ReactNode }): JSX.Element {
   return (
     <section id={id} className="border-t border-slate-100 bg-white py-14 sm:py-16">
