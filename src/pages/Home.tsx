@@ -1,682 +1,749 @@
-/**
- * @file Home.tsx
- * @description Page d'accueil bilingue de la Plateforme Académique d'Innovation Numérique
- * pour Dr. Abakar Malloum.
- */
+/**  
+ * @file Home.tsx  
+ * @description Page d'accueil bilingue de la Plateforme Académique d'Innovation Numérique  
+ * pour Dr. Abakar Malloum.  
+ */  
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'  
 
-// ==========================================
-// 1. LE DICTIONNAIRE BILINGUE
-// ==========================================
-const dict = {
-  fr: {
-    nav: {
-      badge: "Plateforme académique",
-      home: "Accueil",
-      portfolio: "Portfolios de Cours",
-      sim: "Simulateur",
-      publications: "Publications",
-      conferences: "Conférences",
-      activities: "Activités",
-      workshops: "Formations",
-      research: "Recherche",
-      contact: "Contact",
-      langToggle: "EN",
-    },
-    hero: {
-      tag: "Éthique Appliquée & Philosophie Politique",
-      title: "Plateforme Académique d'Innovation Numérique",
-      desc: "Un carrefour entre technologie et sciences humaines dédié à l'enseignement et à la recherche. J'y analyse l'impact de l'intelligence artificielle, des données et de la mondialisation technologique sous l'angle de la philosophie politique, de l'éthique appliquée et des nouveaux enjeux de la citoyenneté numérique.",
-      btnSim: "Lancer le Simulateur",
-      btnCourse: "Voir l'offre de cours",
-      profTag: "Philosophie politique & Gouvernance Numérique",
-      profDesc: "Une approche critique liant l'analyse de données et les fondements moraux traditionnels pour éclairer les décisions publiques de l'ère technologique."
-    },
-    portfolio: {
-      title: "Portfolios de Cours & Transparence Pédagogique",
-      desc: "Gouvernance de cours rigoureuse, grilles d'évaluation explicites et encadrement collégial multipartite garantissant l'équité académique.",
-      ugTitle: "Premier cycle — Enseignement fondamental",
-      pol2508Desc: "Analyse conceptuelle de la modernité politique : genèse de l'État, souveraineté, théories du contrat social (Hobbes, Locke, Rousseau) et fondements des libertés civiles.",
-      pol2108Desc: "Conducted in English. Examination of canonical texts from the Renaissance to the Enlightenment, defining institutional legitimacy, civic duties, and individual rights.",
-      inte3026Title: "Éthique et Sociétés",
-      inte3026Desc: "Étude transdisciplinaire des systèmes moraux face aux mutations sociétales contemporaines. Analyse critique de la justice distributive, de la responsabilité collective et des fractures sociales provoquées par le virage technologique.",
-      gradTitle: "Cycles supérieurs — Séminaires de Maîtrise",
-      epe6709Title: "Éthique, philosophie et politiques publiques",
-      epe6709Desc: "Séminaire avancé analysant la justification morale des décisions de l'État. Modèles de choix social, éthique algorithmique dans les administrations publiques et conciliation entre libertés individuelles et impératifs collectifs.",
-      epe6720Title: "Thèmes choisis en éthique",
-      epe6720Desc: "Recherche approfondie sur les mutations de la mondialisation technologique. Analyse des concepts d'épiphylogenèse, d'aliénation numérique et de reconstruction éthique de la citoyenneté face aux puissances algorithmiques.",
-      govTitle: "Gouvernance Collégiale & Équité Évaluative",
-      govDesc: "Afin d'assurer une impartialité absolue, l'évaluation de la pensée critique au sein de ces cinq modules repose sur un processus rigoureux. La validation des examens, des travaux de séminaire et des livrables de recherche s'effectue en étroite collaboration avec une équipe d'assistants d'enseignement (TAs) et de correcteurs universitaires qualifiés, appliquant des grilles d'évaluation standardisées."
-    },
-    sim: {
-      title: "Laboratoire de Simulation Éthique",
-      desc: "Outil d'expérimentation pédagogique permettant d'ajuster les variables politiques pour évaluer en temps réel les équilibres sociétaux.",
-      selectText: "Sélectionner un cadre d'étude de cours :",
-      btn1: "POL 2108/2508 : État vs Libertés",
-      btn2: "EPE 6709 : IA Publique vs Justice",
-      btn3: "EPE 6720/INTE 3026 : Citoyenneté vs Automatisation",
-      vars: "Variables d'Ajustement",
-      impacts: "Impacts Systémiques Mesurés",
-      labels: {
-        modA: "Pouvoir Centralisé (Léviathan)", modB: "Droits et Revendications Civiles",
-        pubA: "Intégration de l'IA Publique", pubB: "Transparence & Droit de Regard",
-        techA: "Degré d'Automatisation", techB: "Régulation Éthique Globale"
-      },
-      scores: {
-        lib: "Autonomie & Libertés Individuelles",
-        eq: "Équité Sociale & Justice",
-        stab: "Stabilité des Institutions"
-      }
-    },
-    pubs: {
-      title: "Publications & Travaux Scientifiques",
-      desc: "Articles de recherche, contributions à des ouvrages collectifs et rapports d'analyse en philosophie politique et éthique du numérique.",
-      items: [
-        { type: "Recension", title: "Perfectionnisme postkantien et Marx", une revue critique de Douglas Moggach, Freedom and Perfection: German Political Thought from Leibniz to Marx*, vol. Series Number 156, Cambridge University Press, 2025", Politique et sociétés (accepté), year: 2026 },
-          { type: "Article", title: "La citoyenneté numérique à l'ère des algorithmes : fondements philosophiques et enjeux de gouvernance", journal: "Revue Canadienne de Science Politique", year: "2025" },
-        { type: "Chapitre", title: "De Hobbes à l'IA publique : la reconfiguration temporelle des artefacts étatiques", journal: "Éditions Universitaires", year: "2026" }
-        { type: "Article", title: "{ La route comme mémoire et comme technologie : essai sur la dimension philosophique des routes culturelles}", journal: " Culture and Local Governance / Culture et gouvernance locale", year: "2020" }
-      ]
-    },
-    conf: {
-      title: "Conférences & Communications",
-      desc: "Interventions et présentations lors de colloques nationaux et internationaux.",
-      items: [
-        { event: "Congrès annuel de l'Association de science politique", location: "Ottawa, ON", title: "Éthique algorithmique et responsabilité collective", year: "2025" },
-        { event: "Séminaire international sur la mondialisation technologique", location: "Montréal, QC", title: "L'aliénation numérique et les structures de l'État moderne", year: "2026" }
-      ]
-    },
-    act: {
-      title: "Autres Activités Académiques",
-      desc: "Expertises institutionnelles, comités scientifiques, collaborations de recherche et contributions à la vie universitaire.",
-      items: [
-        "Évaluation par les pairs pour des revues académiques spécialisées en éthique appliquée.",
-        "Collaboration stratégique et rapports d'analyse sectoriels pour des organismes canadiens.",
-        "Encadrement collégial et jurys d'évaluation aux cycles supérieurs."
-      ]
-    },
-    workshops: {
-      title: "Formations, ateliers & data pour la décision",
-      desc: "Pour une gouvernance numérique guidée par la conscience sociale. Dans un monde marqué par des clivages politiques complexes et une transformation technologique rapide, l'innovation ne peut plus faire l'économie de l'éthique. Face au déploiement de l'intelligence artificielle et aux mutations de la citoyenneté numérique, nos modules d'enseignement et de recherche visent un objectif incontournable : équiper les futurs décideurs d'une conscience sociale rigoureuse. Nous formons des leaders capables d'encadrer des technologies qui amplifient l'inclusion et la confiance, garantissant ainsi que l'évolution de nos institutions demeure profondément ancrée dans la compassion, l'équité et le service du bien commun.",
-      c1Title: "Ateliers de sensibilisation", c1Desc: "Sessions introductives sur les enjeux du numérique et de la donnée pour les décideurs, les cadres et les équipes.",
-      c2Title: "Formations techniques", c2Desc: "Parcours pratiques pour monter en compétence sur les outils de data science, de visualisation et d'automatisation.",
-      c3Title: "Analyse de données appliquée", c3Desc: "Accompagnement à la mise en place de tableaux de bord, d'indicateurs clés et d'outils d'aide à la décision."
-    },
-    research: {
-      title: "Recherche & projets technologiques",
-      desc: "Une activité de recherche ancrée dans les réalités du terrain, avec des projets collaboratifs à l’interface entre université, institutions et société.",
-      c1Title: "Axes de recherche",
-      c1L1: "Utilisation des données pour les politiques publiques", c1L2: "Transformation numérique des systèmes éducatifs", c1L3: "Intelligence artificielle responsable et éthique",
-      c2Title: "Projets & collaborations",
-      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions."
-    },
-    footer: {
-      desc: "Pour toute demande relative à l'enseignement, aux formations ou aux projets de recherche, merci de prendre contact par les canaux habituels de votre institution.",
-      badge: "Plateforme en évolution continue",
-      rights: "Tous droits réservés."
-    }
-  },
-  en: {
-    nav: {
-      badge: "Academic Platform",
-      home: "Home",
-      portfolio: "Course Portfolios",
-      sim: "Simulator",
-      publications: "Publications",
-      conferences: "Conferences",
-      activities: "Activities",
-      workshops: "Workshops",
-      research: "Research",
-      contact: "Contact",
-      langToggle: "FR",
-    },
-    hero: {
-      tag: "Applied Ethics & Political Philosophy",
-      title: "Academic Platform for Digital Innovation",
-      desc: "A crossroads between technology and humanities dedicated to teaching and research. I analyze the impact of artificial intelligence, data, and technological globalization through the lens of political philosophy, applied ethics, and the new challenges of digital citizenship.",
-      btnSim: "Launch Simulator",
-      btnCourse: "View Course Offerings",
-      profTag: "Political Philosophy & Digital Governance",
-      profDesc: "A critical approach linking data analysis and traditional moral foundations to inform public decisions in the technological age."
-    },
-    portfolio: {
-      title: "Course Portfolios & Pedagogical Transparency",
-      desc: "Rigorous course governance, explicit grading rubrics, and multi-party collegial oversight ensuring academic fairness.",
-      ugTitle: "Undergraduate — Fundamental Teaching",
-      pol2508Desc: "Conceptual analysis of political modernity: genesis of the State, sovereignty, social contract theories (Hobbes, Locke, Rousseau), and foundations of civil liberties.",
-      pol2108Desc: "Conducted in English. Examination of canonical texts from the Renaissance to the Enlightenment, defining institutional legitimacy, civic duties, and individual rights.",
-      inte3026Title: "Ethics and Societies",
-      inte3026Desc: "Transdisciplinary study of moral systems in the face of contemporary societal mutations. Critical analysis of distributive justice, collective responsibility, and social fractures caused by the technological shift.",
-      gradTitle: "Graduate — Master's Seminars",
-      epe6709Title: "Ethics, Philosophy and Public Policy",
-      epe6709Desc: "Advanced seminar analyzing the moral justification of State decisions. Social choice models, algorithmic ethics in public administrations, and balancing individual freedoms with collective imperatives.",
-      epe6720Title: "Selected Topics in Ethics",
-      epe6720Desc: "In-depth research on the mutations of technological globalization. Analysis of the concepts of epiphylogenesis, digital alienation, and the ethical reconstruction of citizenship in the face of algorithmic powers.",
-      govTitle: "Collegial Governance & Evaluative Equity",
-      govDesc: "To ensure absolute impartiality, the evaluation of critical thinking within these five modules is based on a rigorous process. The validation of exams, seminar papers, and research deliverables is carried out in close collaboration with a team of teaching assistants (TAs) and qualified university graders, applying standardized evaluation rubrics."
-    },
-    sim: {
-      title: "Ethical Simulation Laboratory",
-      desc: "Pedagogical experimentation tool allowing the adjustment of political variables to evaluate societal balances in real-time.",
-      selectText: "Select a course framework:",
-      btn1: "POL 2108/2508: State vs Liberties",
-      btn2: "EPE 6709: Public AI vs Justice",
-      btn3: "EPE 6720/INTE 3026: Citizenship vs Automation",
-      vars: "Adjustment Variables",
-      impacts: "Measured Systemic Impacts",
-      labels: {
-        modA: "Centralized Power (Leviathan)", modB: "Civil Rights & Demands",
-        pubA: "Public AI Integration", pubB: "Transparency & Oversight",
-        techA: "Degree of Automation", techB: "Global Ethical Regulation"
-      },
-      scores: {
-        lib: "Autonomy & Individual Liberties",
-        eq: "Social Equity & Justice",
-        stab: "Institutional Stability"
-      }
-    },
-    pubs: {
-      title: "Publications & Scientific Work",
-      desc: "Research articles, contributions to collective works, and analytical reports in political philosophy and digital ethics.",
-      items: [
-        { type: "Article", title: "Digital Citizenship in the Age of Algorithms: Philosophical Foundations and Governance Challenges", journal: "Canadian Journal of Political Science", year: "2025" },
-        { type: "Chapter", title: "From Hobbes to Public AI: The Temporal Reconfiguration of State Artifacts", journal: "University Press", year: "2026" }
-      ]
-    },
-    conf: {
-      title: "Conferences & Communications",
-      desc: "Interventions and presentations at national and international symposiums.",
-      items: [
-        { event: "Annual Congress of the Political Science Association", location: "Ottawa, ON", title: "Algorithmic Ethics and Collective Responsibility", year: "2025" },
-        { event: "International Seminar on Technological Globalization", location: "Montreal, QC", title: "Digital Alienation and the Structures of the Modern State", year: "2026" }
-      ]
-    },
-    act: {
-      title: "Other Academic Activities",
-      desc: "Institutional expertise, scientific committees, research collaborations, and contributions to university life.",
-      items: [
-        "Peer review for specialized academic journals in applied ethics.",
-        "Strategic collaboration and sector analysis reports for Canadian organizations.",
-        "Collegial supervision and evaluation juries at the graduate level."
-      ]
-    },
-    workshops: {
-      title: "Training, Workshops & Data for Decision Making",
-      desc: "Towards digital governance guided by social conscience. In a world marked by complex political divisions and rapid technological transformation, innovation can no longer bypass ethics. In the face of artificial intelligence deployment and the mutations of digital citizenship, our teaching and research modules aim at an essential objective: equipping future decision-makers with a rigorous social conscience. We train leaders capable of guiding technologies that amplify inclusion and trust, thereby ensuring that the evolution of our institutions remains deeply rooted in compassion, equity, and the service of the common good.",
-      c1Title: "Awareness Workshops", c1Desc: "Introductory sessions on digital and data challenges for decision-makers, executives, and operational teams.",
-      c2Title: "Technical Training", c2Desc: "Practical paths to gain skills in data science tools, visualization, and automation.",
-      c3Title: "Applied Data Analysis", c3Desc: "Support in setting up dashboards, key indicators, and data-driven decision support tools."
-    },
-    research: {
-      title: "Research & Technological Projects",
-      desc: "Research activity rooted in field realities, with collaborative projects at the interface between university, institutions, and society.",
-      c1Title: "Research Axes",
-      c1L1: "Use of data for public policies", c1L2: "Digital transformation of educational systems", c1L3: "Responsible and ethical artificial intelligence",
-      c2Title: "Projects & Collaborations",
-      c2Desc: "Development of technological projects, case studies, and research work conducted in partnership with national universities and institutions."
-    },
-    footer: {
-      desc: "For any inquiries regarding teaching, training, or research projects, please contact us through your institution's usual channels.",
-      badge: "Platform in continuous evolution",
-      rights: "All rights reserved."
-    }
-  }
-}
+// ==========================================  
+// 1. LE DICTIONNAIRE BILINGUE  
+// ==========================================  
+const dict = {  
+  fr: {  
+    nav: {  
+      badge: "Plateforme académique",  
+      home: "Accueil",  
+      portfolio: "Portfolios de Cours",  
+      sim: "Simulateur",  
+      publications: "Publications",  
+      conferences: "Conférences",  
+      activities: "Activités",  
+      workshops: "Formations",  
+      research: "Recherche",  
+      contact: "Contact",  
+      langToggle: "EN",  
+    },  
+    hero: {  
+      tag: "Éthique Appliquée & Philosophie Politique",  
+      title: "Plateforme Académique d'Innovation Numérique",  
+      desc: "Un carrefour entre technologie et sciences humaines dédié à l'enseignement et à la recherche. J'y analyse l'impact de l'intelligence artificielle, des données et de la mondialisation technologique sous l'angle de la philosophie politique, de l'éthique appliquée et des nouveaux enjeux de la citoyenneté numérique.",  
+      btnSim: "Lancer le Simulateur",  
+      btnCourse: "Voir l'offre de cours",  
+      profTag: "Philosophie politique & Gouvernance Numérique",  
+      profDesc: "Une approche critique liant l'analyse de données et les fondements moraux traditionnels pour éclairer les décisions publiques de l'ère technologique."  
+    },  
+    portfolio: {  
+      title: "Portfolios de Cours & Transparence Pédagogique",  
+      desc: "Gouvernance de cours rigoureuse, grilles d'évaluation explicites et encadrement collégial multipartite garantissant l'équité académique.",  
+      ugTitle: "Premier cycle — Enseignement fondamental",  
+      pol2508Desc: "Analyse conceptuelle de la modernité politique : genèse de l'État, souveraineté, théories du contrat social (Hobbes, Locke, Rousseau) et fondements des libertés civiles.",  
+      pol2108Desc: "Conducted in English. Examination of canonical texts from the Renaissance to the Enlightenment, defining institutional legitimacy, civic duties, and individual rights.",  
+      inte3026Title: "Éthique et Sociétés",  
+      inte3026Desc: "Étude transdisciplinaire des systèmes moraux face aux mutations sociétales contemporaines. Analyse critique de la justice distributive, de la responsabilité collective et des fractures sociales provoquées par le virage technologique.",  
+      gradTitle: "Cycles supérieurs — Séminaires de Maîtrise",  
+      epe6709Title: "Éthique, philosophie et politiques publiques",  
+      epe6709Desc: "Séminaire avancé analysant la justification morale des décisions de l'État. Modèles de choix social, éthique algorithmique dans les administrations publiques et conciliation entre libertés individuelles et impératifs collectifs.",  
+      epe6720Title: "Thèmes choisis en éthique",  
+      epe6720Desc: "Recherche approfondie sur les mutations de la mondialisation technologique. Analyse des concepts d'épiphylogenèse, d'aliénation numérique et de reconstruction éthique de la citoyenneté face aux puissances algorithmiques.",  
+      govTitle: "Gouvernance Collégiale & Équité Évaluative",  
+      govDesc: "Afin d'assurer une impartialité absolue, l'évaluation de la pensée critique au sein de ces cinq modules repose sur un processus rigoureux. La validation des examens, des travaux de séminaire et des livrables de recherche s'effectue en étroite collaboration avec une équipe d'assistants d'enseignement (TAs) et de correcteurs universitaires qualifiés, appliquant des grilles d'évaluation standardisées."  
+    },  
+    sim: {  
+      title: "Laboratoire de Simulation Éthique",  
+      desc: "Outil d'expérimentation pédagogique permettant d'ajuster les variables politiques pour évaluer en temps réel les équilibres sociétaux.",  
+      selectText: "Sélectionner un cadre d'étude de cours :",  
+      btn1: "POL 2108/2508 : État vs Libertés",  
+      btn2: "EPE 6709 : IA Publique vs Justice",  
+      btn3: "EPE 6720/INTE 3026 : Citoyenneté vs Automatisation",  
+      vars: "Variables d'Ajustement",  
+      impacts: "Impacts Systémiques Mesurés",  
+      labels: {  
+        modA: "Pouvoir Centralisé (Léviathan)", modB: "Droits et Revendications Civiles",  
+        pubA: "Intégration de l'IA Publique", pubB: "Transparence & Droit de Regard",  
+        techA: "Degré d'Automatisation", techB: "Régulation Éthique Globale"  
+      },  
+      scores: {  
+        lib: "Autonomie & Libertés Individuelles",  
+        eq: "Équité Sociale & Justice",  
+        stab: "Stabilité des Institutions"  
+      }  
+    },  
+    pubs: {  
+      title: "Publications & Travaux Scientifiques",  
+      desc: "Articles de recherche, comptes rendus critiques et contributions scientifiques en philosophie politique, éthique et études culturelles.",  
+      items: [  
+        {  
+          type: "Article",  
+          title: "Big data et la numérisation de l'exclusion sociale",  
+          journal: "Global Media Journal – Canadian Edition, 12(1), 69-84",  
+          year: "2020",  
+          status: "Publié"  
+        },  
+        {  
+          type: "Article",  
+          title: "Les traces culturelles du colonialisme au Vietnam : réflexions sur l'éthique de la réception en architecture",  
+          journal: "Ethica, 24(1) — avec J. Paquette",  
+          year: "2020",  
+          status: "Publié"  
+        },  
+        {  
+          type: "Article",  
+          title: "La route comme mémoire et comme technologie",  
+          journal: "Culture and Local Governance / Culture et gouvernance locale, 7(1-2)",  
+          year: "2021",  
+          status: "Publié"  
+        },  
+        {  
+          type: "Article",  
+          title: "Music as the \"Heritage of Heritages\": Terrorist Threat and Cultural Resistance in Northern Mali",  
+          journal: "The Journal of Arts Management, Law, and Society",  
+          year: "2025",  
+          status: "Accepté"  
+        },  
+        {  
+          type: "Compte rendu critique",  
+          title: "Perfectionnisme postkantien et pensée politique allemande",  
+          journal: "Politique et sociétés",  
+          year: "2026",  
+          status: "Accepté"  
+        },  
+        {  
+          type: "Article",  
+          title: "L'amour et le politique : l'impossibilité d'une synthèse définitive ?",  
+          journal: "Revue à confirmer",  
+          year: "2025",  
+          status: "Soumis"  
+        },  
+        {  
+          type: "Article",  
+          title: "Convergence théorique entre la phénoménologie de Stiegler et la théorie quantique de Guillamant",  
+          journal: "En préparation pour soumission",  
+          year: "2026",  
+          status: "En préparation"  
+        }  
+      ]  
+    },  
+    conf: {  
+      title: "Conférences & Communications",  
+      desc: "Interventions et présentations lors de colloques nationaux et internationaux.",  
+      items: [  
+        { event: "Congrès annuel de l'Association de science politique", location: "Ottawa, ON", title: "Éthique algorithmique et responsabilité collective", year: "2025" },  
+        { event: "Séminaire international sur la mondialisation technologique", location: "Montréal, QC", title: "L'aliénation numérique et les structures de l'État moderne", year: "2026" }  
+      ]  
+    },  
+    act: {  
+      title: "Autres Activités Académiques",  
+      desc: "Expertises institutionnelles, comités scientifiques, collaborations de recherche et contributions à la vie universitaire.",  
+      items: [  
+        "Évaluation par les pairs pour des revues académiques spécialisées en éthique appliquée.",  
+        "Collaboration stratégique et rapports d'analyse sectoriels pour des organismes canadiens.",  
+        "Encadrement collégial et jurys d'évaluation aux cycles supérieurs."  
+      ]  
+    },  
+    workshops: {  
+      title: "Formations, ateliers & data pour la décision",  
+      desc: "Pour une gouvernance numérique guidée par la conscience sociale. Dans un monde marqué par des clivages politiques complexes et une transformation technologique rapide, l'innovation ne peut plus faire l'économie de l'éthique. Face au déploiement de l'intelligence artificielle et aux mutations de la citoyenneté numérique, nos modules d'enseignement et de recherche visent un objectif incontournable : équiper les futurs décideurs d'une conscience sociale rigoureuse. Nous formons des leaders capables d'encadrer des technologies qui amplifient l'inclusion et la confiance, garantissant ainsi que l'évolution de nos institutions demeure profondément ancrée dans la compassion, l'équité et le service du bien commun.",  
+      c1Title: "Ateliers de sensibilisation", c1Desc: "Sessions introductives sur les enjeux du numérique et de la donnée pour les décideurs, les cadres et les équipes.",  
+      c2Title: "Formations techniques", c2Desc: "Parcours pratiques pour monter en compétence sur les outils de data science, de visualisation et d'automatisation.",  
+      c3Title: "Analyse de données appliquée", c3Desc: "Accompagnement à la mise en place de tableaux de bord, d'indicateurs clés et d'outils d'aide à la décision."  
+    },  
+    research: {  
+      title: "Recherche & projets technologiques",  
+      desc: "Une activité de recherche ancrée dans les réalités du terrain, avec des projets collaboratifs à l'interface entre université, institutions et société.",  
+      c1Title: "Axes de recherche",  
+      c1L1: "Utilisation des données pour les politiques publiques", c1L2: "Transformation numérique des systèmes éducatifs", c1L3: "Intelligence artificielle responsable et éthique",  
+      c2Title: "Projets & collaborations",  
+      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions."  
+    },  
+    footer: {  
+      desc: "Pour toute demande relative à l'enseignement, aux formations ou aux projets de recherche, merci de prendre contact par les canaux habituels de votre institution.",  
+      badge: "Plateforme en évolution continue",  
+      rights: "Tous droits réservés."  
+    }  
+  },  
+  en: {  
+    nav: {  
+      badge: "Academic Platform",  
+      home: "Home",  
+      portfolio: "Course Portfolios",  
+      sim: "Simulator",  
+      publications: "Publications",  
+      conferences: "Conferences",  
+      activities: "Activities",  
+      workshops: "Workshops",  
+      research: "Research",  
+      contact: "Contact",  
+      langToggle: "FR",  
+    },  
+    hero: {  
+      tag: "Applied Ethics & Political Philosophy",  
+      title: "Academic Platform for Digital Innovation",  
+      desc: "A crossroads between technology and humanities dedicated to teaching and research. I analyze the impact of artificial intelligence, data, and technological globalization through the lens of political philosophy, applied ethics, and the new challenges of digital citizenship.",  
+      btnSim: "Launch Simulator",  
+      btnCourse: "View Course Offerings",  
+      profTag: "Political Philosophy & Digital Governance",  
+      profDesc: "A critical approach linking data analysis and traditional moral foundations to inform public decisions in the technological age."  
+    },  
+    portfolio: {  
+      title: "Course Portfolios & Pedagogical Transparency",  
+      desc: "Rigorous course governance, explicit grading rubrics, and multi-party collegial oversight ensuring academic fairness.",  
+      ugTitle: "Undergraduate — Fundamental Teaching",  
+      pol2508Desc: "Conceptual analysis of political modernity: genesis of the State, sovereignty, social contract theories (Hobbes, Locke, Rousseau), and foundations of civil liberties.",  
+      pol2108Desc: "Conducted in English. Examination of canonical texts from the Renaissance to the Enlightenment, defining institutional legitimacy, civic duties, and individual rights.",  
+      inte3026Title: "Ethics and Societies",  
+      inte3026Desc: "Transdisciplinary study of moral systems in the face of contemporary societal mutations. Critical analysis of distributive justice, collective responsibility, and social fractures caused by the technological shift.",  
+      gradTitle: "Graduate — Master's Seminars",  
+      epe6709Title: "Ethics, Philosophy and Public Policy",  
+      epe6709Desc: "Advanced seminar analyzing the moral justification of State decisions. Social choice models, algorithmic ethics in public administrations, and balancing individual freedoms with collective imperatives.",  
+      epe6720Title: "Selected Topics in Ethics",  
+      epe6720Desc: "In-depth research on the mutations of technological globalization. Analysis of the concepts of epiphylogenesis, digital alienation, and the ethical reconstruction of citizenship in the face of algorithmic powers.",  
+      govTitle: "Collegial Governance & Evaluative Equity",  
+      govDesc: "To ensure absolute impartiality, the evaluation of critical thinking within these five modules is based on a rigorous process. The validation of exams, seminar papers, and research deliverables is carried out in close collaboration with a team of teaching assistants (TAs) and qualified university graders, applying standardized evaluation rubrics."  
+    },  
+    sim: {  
+      title: "Ethical Simulation Laboratory",  
+      desc: "Pedagogical experimentation tool allowing the adjustment of political variables to evaluate societal balances in real-time.",  
+      selectText: "Select a course framework:",  
+      btn1: "POL 2108/2508: State vs Liberties",  
+      btn2: "EPE 6709: Public AI vs Justice",  
+      btn3: "EPE 6720/INTE 3026: Citizenship vs Automation",  
+      vars: "Adjustment Variables",  
+      impacts: "Measured Systemic Impacts",  
+      labels: {  
+        modA: "Centralized Power (Leviathan)", modB: "Civil Rights & Demands",  
+        pubA: "Public AI Integration", pubB: "Transparency & Oversight",  
+        techA: "Degree of Automation", techB: "Global Ethical Regulation"  
+      },  
+      scores: {  
+        lib: "Autonomy & Individual Liberties",  
+        eq: "Social Equity & Justice",  
+        stab: "Institutional Stability"  
+      }  
+    },  
+    pubs: {  
+      title: "Publications & Scientific Work",  
+      desc: "Research articles, critical reviews, and scholarly contributions in political philosophy, ethics, and cultural studies.",  
+      items: [  
+        {  
+          type: "Article",  
+          title: "Big Data and the Digitization of Social Exclusion",  
+          journal: "Global Media Journal – Canadian Edition, 12(1), 69-84",  
+          year: "2020",  
+          status: "Published"  
+        },  
+        {  
+          type: "Article",  
+          title: "Cultural Traces of Colonialism in Vietnam: Reflections on the Ethics of Reception in Architecture",  
+          journal: "Ethica, 24(1) — with J. Paquette",  
+          year: "2020",  
+          status: "Published"  
+        },  
+        {  
+          type: "Article",  
+          title: "The Road as Memory and Technology",  
+          journal: "Culture and Local Governance, 7(1-2)",  
+          year: "2021",  
+          status: "Published"  
+        },  
+        {  
+          type: "Article",  
+          title: "Music as the \"Heritage of Heritages\": Terrorist Threat and Cultural Resistance in Northern Mali",  
+          journal: "The Journal of Arts Management, Law, and Society",  
+          year: "2025",  
+          status: "Accepted"  
+        },  
+        {  
+          type: "Critical Review",  
+          title: "Post-Kantian Perfectionism and German Political Thought",  
+          journal: "Politique et sociétés",  
+          year: "2026",  
+          status: "Accepted"  
+        },  
+        {  
+          type: "Article",  
+          title: "Love and the Political: The Impossibility of a Definitive Synthesis?",  
+          journal: "Journal to be confirmed",  
+          year: "2025",  
+          status: "Submitted"  
+        },  
+        {  
+          type: "Article",  
+          title: "Theoretical Convergence Between Stiegler's Phenomenology and Guillamant's Quantum Theory",  
+          journal: "In preparation for submission",  
+          year: "2026",  
+          status: "In preparation"  
+        }  
+      ]  
+    },  
+    conf: {  
+      title: "Conferences & Communications",  
+      desc: "Interventions and presentations at national and international symposiums.",  
+      items: [  
+        { event: "Annual Congress of the Political Science Association", location: "Ottawa, ON", title: "Algorithmic Ethics and Collective Responsibility", year: "2025" },  
+        { event: "International Seminar on Technological Globalization", location: "Montreal, QC", title: "Digital Alienation and the Structures of the Modern State", year: "2026" }  
+      ]  
+    },  
+    act: {  
+      title: "Other Academic Activities",  
+      desc: "Institutional expertise, scientific committees, research collaborations, and contributions to university life.",  
+      items: [  
+        "Peer review for specialized academic journals in applied ethics.",  
+        "Strategic collaboration and sector analysis reports for Canadian organizations.",  
+        "Collegial supervision and evaluation juries at the graduate level."  
+      ]  
+    },  
+    workshops: {  
+      title: "Training, Workshops & Data for Decision Making",  
+      desc: "Towards digital governance guided by social conscience. In a world marked by complex political divisions and rapid technological transformation, innovation can no longer bypass ethics. In the face of artificial intelligence deployment and the mutations of digital citizenship, our teaching and research modules aim at an essential objective: equipping future decision-makers with a rigorous social conscience. We train leaders capable of guiding technologies that amplify inclusion and trust, thereby ensuring that the evolution of our institutions remains deeply rooted in compassion, equity, and the service of the common good.",  
+      c1Title: "Awareness Workshops", c1Desc: "Introductory sessions on digital and data challenges for decision-makers, executives, and operational teams.",  
+      c2Title: "Technical Training", c2Desc: "Practical paths to gain skills in data science tools, visualization, and automation.",  
+      c3Title: "Applied Data Analysis", c3Desc: "Support in setting up dashboards, key indicators, and data-driven decision support tools."  
+    },  
+    research: {  
+      title: "Research & Technological Projects",  
+      desc: "Research activity rooted in field realities, with collaborative projects at the interface between university, institutions, and society.",  
+      c1Title: "Research Axes",  
+      c1L1: "Use of data for public policies", c1L2: "Digital transformation of educational systems", c1L3: "Responsible and ethical artificial intelligence",  
+      c2Title: "Projects & Collaborations",  
+      c2Desc: "Development of technological projects, case studies, and research work conducted in partnership with national universities and institutions."  
+    },  
+    footer: {  
+      desc: "For any inquiries regarding teaching, training, or research projects, please contact us through your institution's usual channels.",  
+      badge: "Platform in continuous evolution",  
+      rights: "All rights reserved."  
+    }  
+  }  
+}  
 
-// ==========================================
-// 2. FONCTIONS DE NAVIGATION
-// ==========================================
-function scrollToSection(id: string): void {
-  const element = document.getElementById(id)
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-}
+// ==========================================  
+// 2. FONCTIONS DE NAVIGATION  
+// ==========================================  
+function scrollToSection(id: string): void {  
+  const element = document.getElementById(id)  
+  if (element) {  
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })  
+  }  
+}  
 
-// ==========================================
-// 3. COMPOSANTS (AVEC GESTION DE LANGUE)
-// ==========================================
+// ==========================================  
+// 3. COMPOSANTS (AVEC GESTION DE LANGUE)  
+// ==========================================  
 
-function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') => void }): JSX.Element {
-  const t = dict[lang].nav
-  // Nouvel état pour gérer l'ouverture du menu sur téléphone
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') => void }): JSX.Element {  
+  const t = dict[lang].nav  
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)  
 
-  const navItems = [
-    { label: t.home, targetId: 'home' },
-    { label: t.portfolio, targetId: 'teaching-portfolio' },
-    { label: t.sim, targetId: 'simulator-lab' },
-    { label: t.publications, targetId: 'publications' },
-    { label: t.conferences, targetId: 'conferences' },
-    { label: t.activities, targetId: 'academic-activities' },
-    { label: t.workshops, targetId: 'workshops' },
-    { label: t.research, targetId: 'research' },
-  ]
+  const navItems = [  
+    { label: t.home, targetId: 'home' },  
+    { label: t.portfolio, targetId: 'teaching-portfolio' },  
+    { label: t.sim, targetId: 'simulator-lab' },  
+    { label: t.publications, targetId: 'publications' },  
+    { label: t.conferences, targetId: 'conferences' },  
+    { label: t.activities, targetId: 'academic-activities' },  
+    { label: t.workshops, targetId: 'workshops' },  
+    { label: t.research, targetId: 'research' },  
+  ]  
 
-  return (
-    <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+  return (  
+    <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-md">  
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">  
         
-        {/* 1. LOGO ET NOM */}
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white shadow-sm">
-            AM
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
-              {t.badge}
-            </span>
-            <span className="text-sm font-semibold text-slate-900 sm:text-base">
-              Prof. Abakar Malloum
-            </span>
-          </div>
-        </div>
+        <div className="flex items-center gap-2">  
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white shadow-sm">  
+            AM  
+          </div>  
+          <div className="flex flex-col">  
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">  
+              {t.badge}  
+            </span>  
+            <span className="text-sm font-semibold text-slate-900 sm:text-base">  
+              Prof. Abakar Malloum  
+            </span>  
+          </div>  
+        </div>  
 
-        {/* 2. NAVIGATION ORDINATEUR (Cachée sur mobile) */}
-        <nav className="hidden items-center gap-3 lg:gap-4 text-xs lg:text-sm font-medium text-slate-600 sm:flex">
-          {navItems.map((item) => (
-            <button key={item.targetId} type="button" onClick={() => scrollToSection(item.targetId)} className="transition-colors hover:text-slate-900">
-              {item.label}
-            </button>
-          ))}
-        </nav>
+        <nav className="hidden items-center gap-3 lg:gap-4 text-xs lg:text-sm font-medium text-slate-600 sm:flex">  
+          {navItems.map((item) => (  
+            <button key={item.targetId} type="button" onClick={() => scrollToSection(item.targetId)} className="transition-colors hover:text-slate-900">  
+              {item.label}  
+            </button>  
+          ))}  
+        </nav>  
 
-        {/* 3. BOUTONS TOUJOURS VISIBLES (Langue + Hamburger Mobile) */}
-        <div className="flex items-center gap-3">
-          {/* BOUTON DE LANGUE (Mots complets) */}
-          <button 
-            onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
-            className="flex items-center justify-center rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold text-slate-800 transition hover:bg-slate-200"
-          >
-            {lang === 'fr' ? 'English' : 'Français'}
-          </button>
+        <div className="flex items-center gap-3">  
+          <button   
+            onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}  
+            className="flex items-center justify-center rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold text-slate-800 transition hover:bg-slate-200"  
+          >  
+            {lang === 'fr' ? 'English' : 'Français'}  
+          </button>  
           
-          {/* Le bouton Hamburger (Visible uniquement sur mobile : sm:hidden) */}
-          <button 
-            className="flex items-center justify-center p-2 text-slate-600 hover:text-slate-900 sm:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {/* Si le menu est ouvert on affiche une croix (X), sinon les 3 lignes (Hamburger) */}
-            {isMobileMenuOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            )}
-          </button>
-        </div>
-      </div>
+          <button   
+            className="flex items-center justify-center p-2 text-slate-600 hover:text-slate-900 sm:hidden"  
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}  
+          >  
+            {isMobileMenuOpen ? (  
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>  
+            ) : (  
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>  
+            )}  
+          </button>  
+        </div>  
+      </div>  
 
-      {/* 4. LE MENU DÉROULANT MOBILE */}
-      {isMobileMenuOpen && (
-        <div className="absolute left-0 top-full w-full border-b border-slate-100 bg-white px-4 py-4 shadow-lg sm:hidden">
-          <nav className="flex flex-col space-y-4 text-sm font-medium text-slate-600">
-            {navItems.map((item) => (
-              <button 
-                key={item.targetId} 
-                type="button" 
-                onClick={() => {
-                  scrollToSection(item.targetId);
-                  setIsMobileMenuOpen(false); // Ferme le menu après le clic
-                }} 
-                className="text-left transition-colors hover:text-slate-900"
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-      )}
-    </header>
-  )
-}
+      {isMobileMenuOpen && (  
+        <div className="absolute left-0 top-full w-full border-b border-slate-100 bg-white px-4 py-4 shadow-lg sm:hidden">  
+          <nav className="flex flex-col space-y-4 text-sm font-medium text-slate-600">  
+            {navItems.map((item) => (  
+              <button   
+                key={item.targetId}   
+                type="button"   
+                onClick={() => {  
+                  scrollToSection(item.targetId);  
+                  setIsMobileMenuOpen(false);  
+                }}   
+                className="text-left transition-colors hover:text-slate-900"  
+              >  
+                {item.label}  
+              </button>  
+            ))}  
+          </nav>  
+        </div>  
+      )}  
+    </header>  
+  )  
+}  
 
-function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].hero
-  return (
-    <section id="home" className="relative h-screen w-full overflow-hidden">
-      {/* Vidéo de fond */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover"
-      >
-        <source src="/video-classroom.mp4" type="video/mp4" />
-      </video>
+function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].hero  
+  return (  
+    <section id="home" className="relative h-screen w-full overflow-hidden">  
+      <video  
+        autoPlay  
+        loop  
+        muted  
+        playsInline  
+        className="absolute top-0 left-0 w-full h-full object-cover"  
+      >  
+        <source src="/video-classroom.mp4" type="video/mp4" />  
+      </video>  
 
-      {/* Voile sombre */}
-      <div className="absolute top-0 left-0 w-full h-full bg-slate-900/70 z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-slate-900/70 z-0"></div>  
 
-      {/* Contenu principal en deux colonnes */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center h-full max-w-6xl mx-auto px-6 gap-8 lg:gap-16">
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center h-full max-w-6xl mx-auto px-6 gap-8 lg:gap-16">  
         
-        {/* Colonne de gauche : Texte */}
-        <div className="flex-1 text-center lg:text-left">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200 backdrop-blur-md shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            {t.tag}
-          </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">{t.title}</h1>
-          <p className="text-base md:text-lg text-slate-200 mb-8 leading-relaxed max-w-2xl">{t.desc}</p>
-          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-            <button onClick={() => scrollToSection('simulator-lab')} className="px-6 py-3 bg-emerald-500 text-slate-900 font-semibold rounded-full hover:bg-emerald-400 transition">
-              {t.btnSim}
-            </button>
-            <button onClick={() => scrollToSection('teaching-portfolio')} className="px-6 py-3 border border-slate-300 bg-white/10 backdrop-blur-md text-white font-semibold rounded-full hover:bg-white/20 transition">
-              {t.btnCourse}
-            </button>
-          </div>
-        </div>
+        <div className="flex-1 text-center lg:text-left">  
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200 backdrop-blur-md shadow-sm">  
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />  
+            {t.tag}  
+          </span>  
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">{t.title}</h1>  
+          <p className="text-base md:text-lg text-slate-200 mb-8 leading-relaxed max-w-2xl">{t.desc}</p>  
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4">  
+            <button onClick={() => scrollToSection('simulator-lab')} className="px-6 py-3 bg-emerald-500 text-slate-900 font-semibold rounded-full hover:bg-emerald-400 transition">  
+              {t.btnSim}  
+            </button>  
+            <button onClick={() => scrollToSection('teaching-portfolio')} className="px-6 py-3 border border-slate-300 bg-white/10 backdrop-blur-md text-white font-semibold rounded-full hover:bg-white/20 transition">  
+              {t.btnCourse}  
+            </button>  
+          </div>  
+        </div>  
 
-        {/* Colonne de droite : Votre Portrait (vidéo) */}
-        <div className="flex-shrink-0">
-          <div className="w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl backdrop-blur-sm">
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              className="w-full h-full object-cover"
-            >
-              <source src="/mon-portrait-pro.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-function SectionShell({ id, title, description, children }: { id: string, title: string, description: string, children: React.ReactNode }): JSX.Element {
-  return (
-    <section id={id} className="border-t border-slate-100 bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 max-w-3xl space-y-2">
-          <h2 className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">{title}</h2>
-          <p className="text-sm leading-relaxed text-slate-600 sm:text-base">{description}</p>
-        </div>
-        {children}
-      </div>
-    </section>
-  )
-}
+        <div className="flex-shrink-0">  
+          <div className="w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl backdrop-blur-sm">  
+            <video   
+              autoPlay   
+              loop   
+              muted   
+              playsInline   
+              className="w-full h-full object-cover"  
+            >  
+              <source src="/mon-portrait-pro.mp4" type="video/mp4" />  
+            </video>  
+          </div>  
+        </div>  
+      </div>  
+    </section>  
+  )  
+}  
 
-function TotalCoursePortfolio({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].portfolio
-  return (
-    <SectionShell id="teaching-portfolio" title={t.title} description={t.desc}>
-      <div className="mb-10">
-        <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">{t.ugTitle}</h3>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-            <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">POL 2508</span>
-            <h4 className="mt-3 text-base font-semibold text-slate-900">Pensée politique moderne I</h4>
-            <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.pol2508Desc}</p>
-          </div>
-          <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-            <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">POL 2108</span>
-            <h4 className="mt-3 text-base font-semibold text-slate-900">Modern Political Thought I</h4>
-            <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.pol2108Desc}</p>
-          </div>
-        </div>
-      </div>
-      <div className="mb-10">
-        <div className="grid gap-5 sm:grid-cols-1">
-          <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-            <span className="rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-600">INTE 3026</span>
-            <h4 className="mt-3 text-base font-semibold text-slate-900">{t.inte3026Title}</h4>
-            <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.inte3026Desc}</p>
-          </div>
-        </div>
-      </div>
-      <div className="mb-10">
-        <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">{t.gradTitle}</h3>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div className="rounded-2xl border border-slate-100 bg-slate-900 p-5 text-white shadow-sm">
-            <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold text-emerald-400">EPE 6709</span>
-            <h4 className="mt-3 text-base font-semibold text-white">{t.epe6709Title}</h4>
-            <p className="mt-2 text-xs leading-relaxed text-slate-300 sm:text-sm">{t.epe6709Desc}</p>
-          </div>
-          <div className="rounded-2xl border border-slate-100 bg-slate-900 p-5 text-white shadow-sm">
-            <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold text-emerald-400">EPE 6720</span>
-            <h4 className="mt-3 text-base font-semibold text-white">{t.epe6720Title}</h4>
-            <p className="mt-2 text-xs leading-relaxed text-slate-300 sm:text-sm">{t.epe6720Desc}</p>
-          </div>
-        </div>
-      </div>
-      <div className="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-        <h4 className="text-sm font-semibold text-slate-900">{t.govTitle}</h4>
-        <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.govDesc}</p>
-      </div>
-    </SectionShell>
-  )
-}
+function SectionShell({ id, title, description, children }: { id: string, title: string, description: string, children: React.ReactNode }): JSX.Element {  
+  return (  
+    <section id={id} className="border-t border-slate-100 bg-white py-14 sm:py-16">  
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">  
+        <div className="mb-8 max-w-3xl space-y-2">  
+          <h2 className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">{title}</h2>  
+          <p className="text-sm leading-relaxed text-slate-600 sm:text-base">{description}</p>  
+        </div>  
+        {children}  
+      </div>  
+    </section>  
+  )  
+}  
 
-function SimulationLab({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].sim
-  const [course, setCourse] = useState<'modern' | 'public' | 'tech'>('modern')
-  const [paramA, setParamA] = useState<number>(50)
-  const [paramB, setParamB] = useState<number>(50)
+function TotalCoursePortfolio({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].portfolio  
+  return (  
+    <SectionShell id="teaching-portfolio" title={t.title} description={t.desc}>  
+      <div className="mb-10">  
+        <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">{t.ugTitle}</h3>  
+        <div className="grid gap-5 sm:grid-cols-2">  
+          <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">  
+            <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">POL 2508</span>  
+            <h4 className="mt-3 text-base font-semibold text-slate-900">Pensée politique moderne I</h4>  
+            <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.pol2508Desc}</p>  
+          </div>  
+          <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">  
+            <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">POL 2108</span>  
+            <h4 className="mt-3 text-base font-semibold text-slate-900">Modern Political Thought I</h4>  
+            <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.pol2108Desc}</p>  
+          </div>  
+        </div>  
+      </div>  
+      <div className="mb-10">  
+        <div className="grid gap-5 sm:grid-cols-1">  
+          <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">  
+            <span className="rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-600">INTE 3026</span>  
+            <h4 className="mt-3 text-base font-semibold text-slate-900">{t.inte3026Title}</h4>  
+            <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.inte3026Desc}</p>  
+          </div>  
+        </div>  
+      </div>  
+      <div className="mb-10">  
+        <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">{t.gradTitle}</h3>  
+        <div className="grid gap-5 sm:grid-cols-2">  
+          <div className="rounded-2xl border border-slate-100 bg-slate-900 p-5 text-white shadow-sm">  
+            <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold text-emerald-400">EPE 6709</span>  
+            <h4 className="mt-3 text-base font-semibold text-white">{t.epe6709Title}</h4>  
+            <p className="mt-2 text-xs leading-relaxed text-slate-300 sm:text-sm">{t.epe6709Desc}</p>  
+          </div>  
+          <div className="rounded-2xl border border-slate-100 bg-slate-900 p-5 text-white shadow-sm">  
+            <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold text-emerald-400">EPE 6720</span>  
+            <h4 className="mt-3 text-base font-semibold text-white">{t.epe6720Title}</h4>  
+            <p className="mt-2 text-xs leading-relaxed text-slate-300 sm:text-sm">{t.epe6720Desc}</p>  
+          </div>  
+        </div>  
+      </div>  
+      <div className="rounded-2xl border border-slate-100 bg-slate-50 p-6">  
+        <h4 className="text-sm font-semibold text-slate-900">{t.govTitle}</h4>  
+        <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.govDesc}</p>  
+      </div>  
+    </SectionShell>  
+  )  
+}  
 
-  const libertyScore = course === 'modern' ? Math.max(10, 100 - paramA) : Math.min(95, paramA + 20)
-  const equityScore = course === 'public' ? Math.min(100, (paramA + paramB) / 1.5) : Math.max(15, (paramB * 0.9))
-  const stabilityScore = Math.min(100, (paramA * 0.5) + (paramB * 0.6))
+function SimulationLab({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].sim  
+  const [course, setCourse] = useState<'modern' | 'public' | 'tech'>('modern')  
+  const [paramA, setParamA] = useState<number>(50)  
+  const [paramB, setParamB] = useState<number>(50)  
 
-  return (
-    <SectionShell id="simulator-lab" title={t.title} description={t.desc}>
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-6">
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">{t.selectText}</label>
-          <div className="flex flex-wrap gap-2">
-            <button onClick={() => { setCourse('modern'); setParamA(40); setParamB(60); }} className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${course === 'modern' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>
-              {t.btn1}
-            </button>
-            <button onClick={() => { setCourse('public'); setParamA(70); setParamB(40); }} className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${course === 'public' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>
-              {t.btn2}
-            </button>
-            <button onClick={() => { setCourse('tech'); setParamA(30); setParamB(80); }} className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${course === 'tech' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>
-              {t.btn3}
-            </button>
-          </div>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2 border-t border-slate-100 pt-6">
-          <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-slate-900">{t.vars}</h4>
-            <div>
-              <label className="flex justify-between text-xs text-slate-600 mb-1">
-                <span>{course === 'modern' ? t.labels.modA : course === 'public' ? t.labels.pubA : t.labels.techA}</span>
-                <span className="font-mono">{paramA}%</span>
-              </label>
-              <input type="range" min="0" max="100" value={paramA} onChange={(e) => setParamA(Number(e.target.value))} className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-slate-900" />
-            </div>
-            <div>
-              <label className="flex justify-between text-xs text-slate-600 mb-1">
-                <span>{course === 'modern' ? t.labels.modB : course === 'public' ? t.labels.pubB : t.labels.techB}</span>
-                <span className="font-mono">{paramB}%</span>
-              </label>
-              <input type="range" min="0" max="100" value={paramB} onChange={(e) => setParamB(Number(e.target.value))} className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-slate-900" />
-            </div>
-          </div>
-          <div className="space-y-4 bg-slate-50 rounded-xl p-4 border border-slate-100">
-            <h4 className="text-sm font-semibold text-slate-900">{t.impacts}</h4>
-            <div>
-              <div className="flex justify-between text-xs text-slate-600 mb-1">
-                <span>{t.scores.lib}</span><span className="font-mono font-semibold">{Math.round(libertyScore)}/100</span>
-              </div>
-              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div className="bg-blue-600 h-full transition-all duration-300" style={{ width: `${libertyScore}%` }} /></div>
-            </div>
-            <div>
-              <div className="flex justify-between text-xs text-slate-600 mb-1">
-                <span>{t.scores.eq}</span><span className="font-mono font-semibold">{Math.round(equityScore)}/100</span>
-              </div>
-              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div className="bg-purple-600 h-full transition-all duration-300" style={{ width: `${equityScore}%` }} /></div>
-            </div>
-            <div>
-              <div className="flex justify-between text-xs text-slate-600 mb-1">
-                <span>{t.scores.stab}</span><span className="font-mono font-semibold">{Math.round(stabilityScore)}/100</span>
-              </div>
-              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div className="bg-emerald-600 h-full transition-all duration-300" style={{ width: `${stabilityScore}%` }} /></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </SectionShell>
-  )
-}
-function PublicationsSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].pubs
-  return (
-    <SectionShell id="publications" title={t.title} description={t.desc}>
-      <div className="space-y-4">
-        {t.items.map((item, idx) => (
-          <div key={idx} className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition hover:shadow-md">
-            <span className="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-600">{item.type}</span>
-            <h4 className="mt-2 text-base font-semibold text-slate-900">{item.title}</h4>
-            <p className="mt-1 text-xs text-slate-500">{item.journal} — {item.year}</p>
-          </div>
-        ))}
-      </div>
-    </SectionShell>
-  )
-}
+  const libertyScore = course === 'modern' ? Math.max(10, 100 - paramA) : Math.min(95, paramA + 20)  
+  const equityScore = course === 'public' ? Math.min(100, (paramA + paramB) / 1.5) : Math.max(15, (paramB * 0.9))  
+  const stabilityScore = Math.min(100, (paramA * 0.5) + (paramB * 0.6))  
 
-function ConferencesSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].conf
-  return (
-    <SectionShell id="conferences" title={t.title} description={t.desc}>
-      <div className="grid gap-5 sm:grid-cols-2">
-        {t.items.map((item, idx) => (
-          <div key={idx} className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm">
-            <span className="text-xs font-mono text-slate-400">{item.year}</span>
-            <h4 className="mt-1 text-base font-semibold text-slate-900">{item.title}</h4>
-            <p className="mt-2 text-xs font-medium text-slate-600">{item.event}</p>
-            <p className="text-xs text-slate-400">{item.location}</p>
-          </div>
-        ))}
-      </div>
-    </SectionShell>
-  )
-}
+  return (  
+    <SectionShell id="simulator-lab" title={t.title} description={t.desc}>  
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">  
+        <div className="mb-6">  
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">{t.selectText}</label>  
+          <div className="flex flex-wrap gap-2">  
+            <button onClick={() => { setCourse('modern'); setParamA(40); setParamB(60); }} className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${course === 'modern' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>  
+              {t.btn1}  
+            </button>  
+            <button onClick={() => { setCourse('public'); setParamA(70); setParamB(40); }} className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${course === 'public' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>  
+              {t.btn2}  
+            </button>  
+            <button onClick={() => { setCourse('tech'); setParamA(30); setParamB(80); }} className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${course === 'tech' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>  
+              {t.btn3}  
+            </button>  
+          </div>  
+        </div>  
+        <div className="grid gap-6 md:grid-cols-2 border-t border-slate-100 pt-6">  
+          <div className="space-y-4">  
+            <h4 className="text-sm font-semibold text-slate-900">{t.vars}</h4>  
+            <div>  
+              <label className="flex justify-between text-xs text-slate-600 mb-1">  
+                <span>{course === 'modern' ? t.labels.modA : course === 'public' ? t.labels.pubA : t.labels.techA}</span>  
+                <span className="font-mono">{paramA}%</span>  
+              </label>  
+              <input type="range" min="0" max="100" value={paramA} onChange={(e) => setParamA(Number(e.target.value))} className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-slate-900" />  
+            </div>  
+            <div>  
+              <label className="flex justify-between text-xs text-slate-600 mb-1">  
+                <span>{course === 'modern' ? t.labels.modB : course === 'public' ? t.labels.pubB : t.labels.techB}</span>  
+                <span className="font-mono">{paramB}%</span>  
+              </label>  
+              <input type="range" min="0" max="100" value={paramB} onChange={(e) => setParamB(Number(e.target.value))} className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-slate-900" />  
+            </div>  
+          </div>  
+          <div className="space-y-4 bg-slate-50 rounded-xl p-4 border border-slate-100">  
+            <h4 className="text-sm font-semibold text-slate-900">{t.impacts}</h4>  
+            <div>  
+              <div className="flex justify-between text-xs text-slate-600 mb-1">  
+                <span>{t.scores.lib}</span><span className="font-mono font-semibold">{Math.round(libertyScore)}/100</span>  
+              </div>  
+              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div className="bg-blue-600 h-full transition-all duration-300" style={{ width: `${libertyScore}%` }} /></div>  
+            </div>  
+            <div>  
+              <div className="flex justify-between text-xs text-slate-600 mb-1">  
+                <span>{t.scores.eq}</span><span className="font-mono font-semibold">{Math.round(equityScore)}/100</span>  
+              </div>  
+              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div className="bg-purple-600 h-full transition-all duration-300" style={{ width: `${equityScore}%` }} /></div>  
+            </div>  
+            <div>  
+              <div className="flex justify-between text-xs text-slate-600 mb-1">  
+                <span>{t.scores.stab}</span><span className="font-mono font-semibold">{Math.round(stabilityScore)}/100</span>  
+              </div>  
+              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden"><div className="bg-emerald-600 h-full transition-all duration-300" style={{ width: `${stabilityScore}%` }} /></div>  
+            </div>  
+          </div>  
+        </div>  
+      </div>  
+    </SectionShell>  
+  )  
+}  
 
-function ActivitiesSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].act
-  return (
-    <SectionShell id="academic-activities" title={t.title} description={t.desc}>
-      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-        <ul className="space-y-3">
-          {t.items.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </SectionShell>
-  )
-}
-function WorkshopsSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].workshops
-  return (
-    <SectionShell id="workshops" title={t.title} description={t.desc}>
-      <div className="grid gap-5 md:grid-cols-3">
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c1Title}</h3>
-          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c1Desc}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c2Title}</h3>
-          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c2Desc}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c3Title}</h3>
-          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c3Desc}</p>
-        </div>
-      </div>
-    </SectionShell>
-  )
-}
+function PublicationsSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].pubs  
 
-function ResearchSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].research
-  return (
-    <SectionShell id="research" title={t.title} description={t.desc}>
-      <div className="grid gap-5 md:grid-cols-2">
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c1Title}</h3>
-          <ul className="mt-2 space-y-1.5 text-xs text-slate-600 sm:text-sm">
-            <li>• {t.c1L1}</li><li>• {t.c1L2}</li><li>• {t.c1L3}</li>
-          </ul>
-        </div>
-        <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c2Title}</h3>
-          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c2Desc}</p>
-        </div>
-      </div>
-    </SectionShell>
-  )
-}
+  const statusColor = (status: string) => {  
+    const s = status.toLowerCase()  
+    if (s.includes('publi') || s === 'published') return 'bg-emerald-50 text-emerald-700'  
+    if (s.includes('accept')) return 'bg-blue-50 text-blue-700'  
+    if (s.includes('soumis') || s === 'submitted') return 'bg-amber-50 text-amber-700'  
+    return 'bg-slate-100 text-slate-600'  
+  }  
 
-function Footer({ lang }: { lang: 'fr'|'en' }): JSX.Element {
-  const t = dict[lang].footer
-  return (
-    <footer id="contact" className="border-t border-slate-100 bg-slate-900 py-8 text-slate-100">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-            {dict[lang].hero.title}
-          </div>
-          <div className="mt-1 text-sm font-semibold text-white sm:text-base">
-            Abakar Malloum
-          </div>
-          <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-300 sm:text-sm">
-            {t.desc}
-          </p>
-        </div>
-        <div className="flex flex-col items-start gap-3 text-xs text-slate-300 sm:items-end sm:text-sm">
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-3 py-1.5 text-xs text-slate-200">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            {t.badge}
-          </div>
-          <p className="text-[11px] text-slate-500 sm:text-xs">
-            &copy; {new Date().getFullYear()} — {t.rights}
-          </p>
-        </div>
-      </div>
-    </footer>
-  )
-}
+  return (  
+    <SectionShell id="publications" title={t.title} description={t.desc}>  
+      <div className="space-y-4">  
+        {t.items.map((item, idx) => (  
+          <div key={idx} className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition hover:shadow-md">  
+            <div className="flex flex-wrap items-center gap-2">  
+              <span className="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-600">{item.type}</span>  
+              <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusColor(item.status)}`}>  
+                {item.status}  
+              </span>  
+            </div>  
+            <h4 className="mt-2 text-base font-semibold text-slate-900">{item.title}</h4>  
+            <p className="mt-1 text-xs text-slate-500">{item.journal} — {item.year}</p>  
+          </div>  
+        ))}  
+      </div>  
+    </SectionShell>  
+  )  
+}  
 
-// ==========================================
-// 4. LE POINT D'ENTRÉE PRINCIPAL
-// ==========================================
-export default function HomePage(): JSX.Element {
-  const [lang, setLang] = useState<'fr' | 'en'>('fr')
+function ConferencesSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].conf  
+  return (  
+    <SectionShell id="conferences" title={t.title} description={t.desc}>  
+      <div className="grid gap-5 sm:grid-cols-2">  
+        {t.items.map((item, idx) => (  
+          <div key={idx} className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm">  
+            <span className="text-xs font-mono text-slate-400">{item.year}</span>  
+            <h4 className="mt-1 text-base font-semibold text-slate-900">{item.title}</h4>  
+            <p className="mt-2 text-xs font-medium text-slate-600">{item.event}</p>  
+            <p className="text-xs text-slate-400">{item.location}</p>  
+          </div>  
+        ))}  
+      </div>  
+    </SectionShell>  
+  )  
+}  
 
-  useEffect(() => {
-    document.title = lang === 'fr' 
-      ? "Prof. Abakar Malloum — Plateforme Académique d'Innovation Numérique"
-      : "Prof. Abakar Malloum — Academic Platform for Digital Innovation"
-  }, [lang])
+function ActivitiesSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].act  
+  return (  
+    <SectionShell id="academic-activities" title={t.title} description={t.desc}>  
+      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">  
+        <ul className="space-y-3">  
+          {t.items.map((item, idx) => (  
+            <li key={idx} className="flex items-start gap-3 text-xs leading-relaxed text-slate-600 sm:text-sm">  
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" />  
+              {item}  
+            </li>  
+          ))}  
+        </ul>  
+      </div>  
+    </SectionShell>  
+  )  
+}  
 
-return (
-    <div className="min-h-screen bg-white text-slate-900 antialiased">
-      <Header lang={lang} setLang={setLang} />
-      <main>
-        <HeroSection lang={lang} />
-        <TotalCoursePortfolio lang={lang} />
-        <SimulationLab lang={lang} />
-        
-        {/* NOUVELLES SECTIONS ADAPTATIVES */}
-        <PublicationsSection lang={lang} />
-        <ConferencesSection lang={lang} />
-        <ActivitiesSection lang={lang} />
-        
-        <WorkshopsSection lang={lang} />
-        <ResearchSection lang={lang} />
-      </main>
-      <Footer lang={lang} />
-    </div>
-  )
-}
+function WorkshopsSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].workshops  
+  return (  
+    <SectionShell id="workshops" title={t.title} description={t.desc}>  
+      <div className="grid gap-5 md:grid-cols-3">  
+        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">  
+          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c1Title}</h3>  
+          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c1Desc}</p>  
+        </div>  
+        <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm">  
+          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c2Title}</h3>  
+          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c2Desc}</p>  
+        </div>  
+        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">  
+          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c3Title}</h3>  
+          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c3Desc}</p>  
+        </div>  
+      </div>  
+    </SectionShell>  
+  )  
+}  
+
+function ResearchSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].research  
+  return (  
+    <SectionShell id="research" title={t.title} description={t.desc}>  
+      <div className="grid gap-5 md:grid-cols-2">  
+        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">  
+          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c1Title}</h3>  
+          <ul className="mt-2 space-y-1.5 text-xs text-slate-600 sm:text-sm">  
+            <li>• {t.c1L1}</li><li>• {t.c1L2}</li><li>• {t.c1L3}</li>  
+          </ul>  
+        </div>  
+        <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm">  
+          <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c2Title}</h3>  
+          <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c2Desc}</p>  
+        </div>  
+      </div>  
+    </SectionShell>  
+  )  
+}  
+
+function Footer({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
+  const t = dict[lang].footer  
+  return (  
+    <footer id="contact" className="border-t border-slate-100 bg-slate-900 py-8 text-slate-100">  
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">  
+        <div>  
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">  
+            {dict[lang].hero.title}  
+          </div>  
+          <div className="mt-1 text-sm font-semibold text-white sm:text-base">  
+            Abakar Malloum  
+          </div>  
+          <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-300 sm:text-sm">  
+            {t.desc}  
+          </p>  
+        </div>  
+        <div className="flex flex-col items-start gap-3 text-xs text-slate-300 sm:items-end sm:text-sm">  
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-3 py-1.5 text-xs text-slate-200">  
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />  
+            {t.badge}  
+          </div>  
+          <p className="text-[11px] text-slate-500 sm:text-xs">  
+            &copy; {new Date().getFullYear()} — {t.rights}  
+          </p>  
+        </div>  
+      </div>  
+    </footer>  
+  )  
+}  
+
+// ==========================================  
+// 4. LE POINT D'ENTRÉE PRINCIPAL  
+// ==
