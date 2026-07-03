@@ -744,6 +744,32 @@ function Footer({ lang }: { lang: 'fr'|'en' }): JSX.Element {
   )  
 }  
 
-// ==========================================  
-// 4. LE POINT D'ENTRÉE PRINCIPAL  
-// ==
+// ==========================================
+// 4. LE POINT D'ENTRÉE PRINCIPAL
+// ==========================================
+export default function HomePage(): JSX.Element {
+  const [lang, setLang] = useState<'fr' | 'en'>('fr')
+
+  useEffect(() => {
+    document.title = lang === 'fr' 
+      ? "Abakar Malloum — Plateforme Académique d'Innovation Numérique"
+      : "Abakar Malloum — Academic Platform for Digital Innovation"
+  }, [lang])
+
+  return (
+    <div className="min-h-screen bg-white text-slate-900 antialiased">
+      <Header lang={lang} setLang={setLang} />
+      <main>
+        <HeroSection lang={lang} />
+        <TotalCoursePortfolio lang={lang} />
+        <SimulationLab lang={lang} />
+        <PublicationsSection lang={lang} />
+        <ConferencesSection lang={lang} />
+        <ActivitiesSection lang={lang} />
+        <WorkshopsSection lang={lang} />
+        <ResearchSection lang={lang} />
+      </main>
+      <Footer lang={lang} />
+    </div>
+  )
+}
