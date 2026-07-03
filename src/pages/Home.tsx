@@ -180,7 +180,7 @@ const dict = {
       title: "Publications & Scientific Work",
       desc: "Research articles, contributions to collective works, and analytical reports in political philosophy and digital ethics.",
       items: [
-        { type: "Article", title: "Digital Citizenship in the Age of Algorithms: Philosophical Foundations and Governance Challenges", journal: "Canadian Journal of Political Science (Example)", year: "2025" },
+        { type: "Article", title: "Digital Citizenship in the Age of Algorithms: Philosophical Foundations and Governance Challenges", journal: "Canadian Journal of Political Science", year: "2025" },
         { type: "Chapter", title: "From Hobbes to Public AI: The Temporal Reconfiguration of State Artifacts", journal: "University Press", year: "2026" }
       ]
     },
