@@ -111,7 +111,7 @@ const dict = {
         {  
           type: "Article",  
           title: "L'amour et le politique : l'impossibilité d'une synthèse définitive ?",  
-          journal: "Revue à confirmer",  
+          journal: "Politique et sociétés",  
           year: "2025",  
           status: "Soumis"  
         },  
