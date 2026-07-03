@@ -73,8 +73,9 @@ const dict = {
       title: "Publications & Travaux Scientifiques",
       desc: "Articles de recherche, contributions à des ouvrages collectifs et rapports d'analyse en philosophie politique et éthique du numérique.",
       items: [
-        { type: "Article", title: "La citoyenneté numérique à l'ère des algorithmes : fondements philosophiques et enjeux de gouvernance", journal: "Revue Canadienne de Science Politique (Exemple)", year: "2025" },
+        { type: "Article", title: "La citoyenneté numérique à l'ère des algorithmes : fondements philosophiques et enjeux de gouvernance", journal: "Revue Canadienne de Science Politique", year: "2025" },
         { type: "Chapitre", title: "De Hobbes à l'IA publique : la reconfiguration temporelle des artefacts étatiques", journal: "Éditions Universitaires", year: "2026" }
+        { type: "Article", title: "{ La route comme mémoire et comme technologie : essai sur la dimension philosophique des routes culturelles}", journal: " Culture and Local Governance / Culture et gouvernance locale", year: "2020" }
       ]
     },
     conf: {
