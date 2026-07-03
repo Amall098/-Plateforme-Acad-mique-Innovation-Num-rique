@@ -415,58 +415,74 @@ function Header({ lang, setLang }: { lang: 'fr'|'en', setLang: (l: 'fr'|'en') =>
   )  
 }  
 
-function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
-  const t = dict[lang].hero  
-  return (  
-    <section id="home" className="relative h-screen w-full overflow-hidden">  
-      <video  
-        autoPlay  
-        loop  
-        muted  
-        playsInline  
-        className="absolute top-0 left-0 w-full h-full object-cover"  
-      >  
-        <source src="/video-classroom.mp4" type="video/mp4" />  
-      </video>  
+function HeroSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
+  const t = dict[lang].hero
+  const [reduceMotion, setReduceMotion] = useState(false)
 
-      <div className="absolute top-0 left-0 w-full h-full bg-slate-900/70 z-0"></div>  
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduceMotion(mq.matches)
 
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center h-full max-w-6xl mx-auto px-6 gap-8 lg:gap-16">  
-        
-        <div className="flex-1 text-center lg:text-left">  
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200 backdrop-blur-md shadow-sm">  
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />  
-            {t.tag}  
-          </span>  
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">{t.title}</h1>  
-          <p className="text-base md:text-lg text-slate-200 mb-8 leading-relaxed max-w-2xl">{t.desc}</p>  
-          <div className="flex flex-wrap justify-center lg:justify-start gap-4">  
-            <button onClick={() => scrollToSection('simulator-lab')} className="px-6 py-3 bg-emerald-500 text-slate-900 font-semibold rounded-full hover:bg-emerald-400 transition">  
-              {t.btnSim}  
-            </button>  
-            <button onClick={() => scrollToSection('teaching-portfolio')} className="px-6 py-3 border border-slate-300 bg-white/10 backdrop-blur-md text-white font-semibold rounded-full hover:bg-white/20 transition">  
-              {t.btnCourse}  
-            </button>  
-          </div>  
-        </div>  
+    const handleChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches)
+    mq.addEventListener('change', handleChange)
+    return () => mq.removeEventListener('change', handleChange)
+  }, [])
 
-        <div className="flex-shrink-0">  
-          <div className="w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl backdrop-blur-sm">  
-            <video   
-              autoPlay   
-              loop   
-              muted   
-              playsInline   
-              className="w-full h-full object-cover"  
-            >  
-              <source src="/mon-portrait-pro.mp4" type="video/mp4" />  
-            </video>  
-          </div>  
-        </div>  
-      </div>  
-    </section>  
-  )  
-}  
+  return (
+    <section id="home" className="relative min-h-screen w-full overflow-hidden flex items-center">
+      {/* 1. Vidéo de fond avec fallback image et respect de prefers-reduced-motion */}
+      <video
+        autoPlay={!reduceMotion}
+        loop={!reduceMotion}
+        muted
+        playsInline
+        poster="/fallback-background.jpg"
+        className="absolute top-0 left-0 w-full h-full object-cover"
+      >
+        <source src="/video-classroom.mp4" type="video/mp4" />
+      </video>
+
+      <div className="absolute top-0 left-0 w-full h-full bg-slate-900/70 z-0"></div>
+
+      {/* 2. Contenu principal avec ordre dynamique pour mobile */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center h-full max-w-6xl mx-auto px-6 py-20 gap-12 lg:gap-20">
+
+        {/* Colonne de gauche : Texte (order-2 sur mobile, order-1 sur desktop) */}
+        <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-200 backdrop-blur-md shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            {t.tag}
+          </span>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">{t.title}</h1>
+          <p className="text-base md:text-lg text-slate-200 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">{t.desc}</p>
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+            <button onClick={() => scrollToSection('simulator-lab')} className="px-6 py-3 bg-emerald-500 text-slate-900 font-semibold rounded-full hover:bg-emerald-400 transition">
+              {t.btnSim}
+            </button>
+            <button onClick={() => scrollToSection('teaching-portfolio')} className="px-6 py-3 border border-slate-300 bg-white/10 backdrop-blur-md text-white font-semibold rounded-full hover:bg-white/20 transition">
+              {t.btnCourse}
+            </button>
+          </div>
+        </div>
+
+        {/* Colonne de droite : Portrait (order-1 sur mobile, order-2 sur desktop) */}
+        <div className="flex-shrink-0 order-1 lg:order-2">
+          <div className="w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl backdrop-blur-sm relative transition-transform lg:hover:scale-[1.02]">
+            <video
+              autoPlay={!reduceMotion}
+              loop={!reduceMotion}
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src="/mon-portrait-pro.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 function SectionShell({ id, title, description, children }: { id: string, title: string, description: string, children: React.ReactNode }): JSX.Element {  
   return (  
