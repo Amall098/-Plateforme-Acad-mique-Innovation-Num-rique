@@ -154,7 +154,10 @@ const dict = {
       c1Title: "Axes de recherche",  
       c1L1: "Utilisation des données pour les politiques publiques", c1L2: "Transformation numérique des systèmes éducatifs", c1L3: "Intelligence artificielle responsable et éthique",  
       c2Title: "Projets & collaborations",  
-      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions."  
+      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions."
+      pdTitle: "PlantDoctor AI",
+      pdDesc: "Application bilingue de diagnostic des pathologies végétales propulsée par l'intelligence artificielle. Un projet de recherche appliquée démontrant comment l'IA peut responsabiliser les communautés et les usagers non experts.",
+      pdBtn: "Tester PlantDoctor AI",
     },  
     footer: {  
       desc: "Pour toute demande relative à l'enseignement, aux formations ou aux projets de recherche, merci de prendre contact par les canaux habituels de votre institution.",  
@@ -306,7 +309,10 @@ const dict = {
       c1Title: "Research Axes",  
       c1L1: "Use of data for public policies", c1L2: "Digital transformation of educational systems", c1L3: "Responsible and ethical artificial intelligence",  
       c2Title: "Projects & Collaborations",  
-      c2Desc: "Development of technological projects, case studies, and research work conducted in partnership with national universities and institutions."  
+      c2Desc: "Development of technological projects, case studies, and research work conducted in partnership with national universities and institutions."
+      pdTitle: "PlantDoctor AI",
+      pdDesc: "Bilingual AI-driven diagnostic application for plant pathologies. An applied research project demonstrating how AI can empower communities and non-expert users.",
+      pdBtn: "Test PlantDoctor AI",
     },  
     footer: {  
       desc: "For any inquiries regarding teaching, training, or research projects, please contact us through your institution's usual channels.",  
@@ -714,7 +720,7 @@ function ResearchSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
   const t = dict[lang].research  
   return (  
     <SectionShell id="research" title={t.title} description={t.desc}>  
-      <div className="grid gap-5 md:grid-cols-2">  
+      <div className="grid gap-5 md:grid-cols-2 mb-5">  
         <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">  
           <h3 className="text-sm font-semibold text-slate-900 sm:text-base">{t.c1Title}</h3>  
           <ul className="mt-2 space-y-1.5 text-xs text-slate-600 sm:text-sm">  
@@ -726,8 +732,31 @@ function ResearchSection({ lang }: { lang: 'fr'|'en' }): JSX.Element {
           <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{t.c2Desc}</p>  
         </div>  
       </div>  
+      
+      {/* NOUVELLE CARTE PLANTDOCTOR AI */}
+      <div className="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-5 transition hover:shadow-md">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700">
+              IA Appliquée
+            </span>
+            <h3 className="text-base font-bold text-slate-900">{t.pdTitle}</h3>
+          </div>
+          <p className="text-xs leading-relaxed text-slate-600 sm:text-sm max-w-2xl">{t.pdDesc}</p>
+        </div>
+        
+        {/* LE BOUTON TRAQUÉ PAR GTM */}
+        <a 
+          href="https://plantdoctor-ai.onrender.com" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="shrink-0 inline-flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white transition-colors hover:bg-emerald-700 shadow-sm"
+        >
+          {t.pdBtn}
+        </a>
+      </div>
     </SectionShell>  
-  )  
+  )
 }  
 
 function Footer({ lang }: { lang: 'fr'|'en' }): JSX.Element {  
