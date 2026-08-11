@@ -154,10 +154,10 @@ const dict = {
       c1Title: "Axes de recherche",  
       c1L1: "Utilisation des données pour les politiques publiques", c1L2: "Transformation numérique des systèmes éducatifs", c1L3: "Intelligence artificielle responsable et éthique",  
       c2Title: "Projets & collaborations",  
-      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions."
+      c2Desc: "Développement de projets technologiques, études de cas et travaux de recherche menés en partenariat avec des universités et institutions.",
       pdTitle: "PlantDoctor AI",
       pdDesc: "Application bilingue de diagnostic des pathologies végétales propulsée par l'intelligence artificielle. Un projet de recherche appliquée démontrant comment l'IA peut responsabiliser les communautés et les usagers non experts.",
-      pdBtn: "Tester PlantDoctor AI",
+      pdBtn: "Tester PlantDoctor AI"
     },  
     footer: {  
       desc: "Pour toute demande relative à l'enseignement, aux formations ou aux projets de recherche, merci de prendre contact par les canaux habituels de votre institution.",  
